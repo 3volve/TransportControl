@@ -4,18 +4,29 @@ import java.util.ArrayList;
 
 public class SystemManager
 {	
+	private ArrayList<Airport> airports; private ArrayList<Airline> airlines;
+	
+	public SystemManager() {
+		airports = new ArrayList<Airport>();
+		airlines = new ArrayList<Airline>();
+	}
+	
 	//Creates an airport object and links it to the SystemManager.  The airport will have a name (code) n; n must have exactly three characters.  No two airports can have the same name.
-	public Airport createAirport( String n ) {	
+	public void createAirport( String n ) {	
+		TransportHubFactory transHubFactory = new TransportHubFactory();
+		Airport newAir;
 		
-		while( n.length() != 3 ) n = ErrorCorrection.fixString( "Error in attempting to name new Airport: naming String of incorrect length.\nPlease enter a string of 3 letters: ");
-		
-		return new Airport(n);
+		if( !arrayContains(new Airport(n), airports) ) {
+			newAir = transHubFactory.createTransportHub(n);
+			airports.add(newAir);
+		}
+		else
+			System.out.println("Airport already created.");
 	}
 	
 	//Creates an airline object with name n and links it to the SystemManager.  An airline has a name that must have a length less than 6.  No two airlines can have the same name.
-	public Airline createAirline( String n ) {
+	public void createAirline( String n ) {
 		
-		return new Airline(n);
 	}
 	
 	//Creates a flight for an airline named aname, from an originating airport (orig) to a destination airport (dest) on a particular date.  The flight has an identifier (id).
@@ -44,5 +55,12 @@ public class SystemManager
 	//Displays attribute values for all objects (e.g., airports, airplanes) in system. 
 	public void displaySystemDetails() {
 		
+	}
+	
+	private boolean arrayContains( Object obj, ArrayList arr ) {
+		for( Object o : arr ) 
+			if( o.toString().equals(obj.toString()) ) return true;
+		
+		return false;
 	}
 }
