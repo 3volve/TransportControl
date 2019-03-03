@@ -18,15 +18,25 @@ public class SystemManager
 		
 		if( !arrayContains(new Airport(n), airports) ) {
 			newAir = transHubFactory.createTransportHub(n);
-			airports.add(newAir);
+			if( newAir != null )
+				airports.add(newAir);
 		}
 		else
-			System.out.println("Airport already created.");
+			System.out.println("Airport already exists.");
 	}
 	
 	//Creates an airline object with name n and links it to the SystemManager.  An airline has a name that must have a length less than 6.  No two airlines can have the same name.
 	public void createAirline( String n ) {
+		TransportFactory transFactory = new TransportFactory();
+		Airline newAir;
 		
+		if( !arrayContains(new Airport(n), airports) ) {
+			newAir = transFactory.createTransport(n);
+			if( newAir != null )
+				airlines.add(newAir);
+		}
+		else
+			System.out.println("Airline already exists.");
 	}
 	
 	//Creates a flight for an airline named aname, from an originating airport (orig) to a destination airport (dest) on a particular date.  The flight has an identifier (id).
