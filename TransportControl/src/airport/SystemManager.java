@@ -1,43 +1,27 @@
 package airport;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class SystemManager
 {	
-	private ArrayList<Airport> airports; private ArrayList<Airline> airlines;
+	private Set<Airport> airports; private Set<Airline> airlines;
 	
 	public SystemManager() {
-		airports = new ArrayList<Airport>();
-		airlines = new ArrayList<Airline>();
+		airports = new TreeSet<Airport>();
+		airlines = new TreeSet<Airline>();
 	}
 	
 	//Creates an airport object and links it to the SystemManager.  The airport will have a name (code) n; n must have exactly three characters.  No two airports can have the same name.
 	public void createAirport( String n ) {	
-		TransportHubFactory transHubFactory = new TransportHubFactory();
-		Airport newAir;
-		
-		if( !arrayContains(new Airport(n), airports) ) {
-			newAir = transHubFactory.createTransportHub(n);
-			if( newAir != null )
-				airports.add(newAir);
-		}
-		else
-			System.out.println("Airport already exists.");
+		if( n.length() != 3 ) System.out.println("Airport was unable to be added: incorrect name input.");
+		else if( !airports.add(new Airport(n)) ) System.out.println("Airport was unable to be added: already created.");
 	}
 	
 	//Creates an airline object with name n and links it to the SystemManager.  An airline has a name that must have a length less than 6.  No two airlines can have the same name.
 	public void createAirline( String n ) {
-		TransportFactory transFactory = new TransportFactory();
-		Airline newAir;
-		
-		if( !arrayContains(new Airport(n), airports) ) {
-			newAir = transFactory.createTransport(n);
-			if( newAir != null )
-				airlines.add(newAir);
+		if( n.length() < 1 || n.length() > 5 ) System.out.println("Airport was unable to be added: incorrect name input.");
+		else if( !airlines.add(new Airline(n)) ) System.out.println("Airport was unable to be added: already created.");
 		}
-		else
-			System.out.println("Airline already exists.");
-	}
 	
 	//Creates a flight for an airline named aname, from an originating airport (orig) to a destination airport (dest) on a particular date.  The flight has an identifier (id).
 	public Flight createFlight( String name, String orig, String dest, int year, int month, int day, String id ) {
@@ -67,10 +51,8 @@ public class SystemManager
 		
 	}
 	
-	private boolean arrayContains( Object obj, ArrayList arr ) {
-		for( Object o : arr ) 
-			if( o.toString().equals(obj.toString()) ) return true;
-		
-		return false;
-	}
+	Set<Airport> getAirports() { return airports; }
+	
+	Set<Airline> getAirlines() { return airlines; }
+	
 }
