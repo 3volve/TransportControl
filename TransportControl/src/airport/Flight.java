@@ -17,4 +17,6 @@ public class Flight
 	void addFlightSection( FlightSection section ) { flightSections.put(section.getSeatClass(), section); }
 	
 	String getID() { return ID; }
+	
+	HashMap<SeatClass, FlightSection> getFlightSections() { return flightSections; }
 }
