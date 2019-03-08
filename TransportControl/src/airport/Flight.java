@@ -15,4 +15,6 @@ public class Flight
 	}
 	
 	void addFlightSection( FlightSection section ) { flightSections.add(section); }
+	
+	String getID() { return ID; }
 }

@@ -1,17 +1,18 @@
 package airport;
 
-import java.util.ArrayList;
-
+import java.util.HashSet;
 public class Airline
 {
 	private String name;
-	private ArrayList<Flight> flights;
+	private HashSet<Flight> flights;
 	
-	Airline( String n ) { name = n; flights = new ArrayList<Flight>(); }
+	Airline( String n ) { name = n; flights = new HashSet<Flight>(); }
 	
-	void addFlight( Flight flight ) {
-		if( !flights.contains(flight) ) flights.add(flight);
-		
-		else System.out.print("Flight already in system for the airline " + name);
+	boolean addFlight( Flight flight ) {
+		return flights.add(flight);
 	}
+	
+	String getName() { return name; }
+	
+	HashSet<Flight> getFlights() { return flights; }
 }

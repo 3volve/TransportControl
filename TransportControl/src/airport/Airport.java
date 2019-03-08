@@ -4,8 +4,6 @@ public class Airport implements Comparable<Airport>
 {
 	private String name;
 	
-	Airport() { name = "null"; }
-	
 	Airport( String n ) { name = n; }
 	
 	@Override

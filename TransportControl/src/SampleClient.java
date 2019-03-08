@@ -20,10 +20,10 @@ public class SampleClient
 		res.createAirline("FRONTIER"); 	//invalid
 		res.createAirline("FRONT"); 	//invalid
 		
-		res.createFlight("DELTA", "DEN", "LON", 2018, 10, 10, "123");
-		res.createFlight("DELTA", "DEN", "DEN", 2018, 8, 8, "567abc");		//same airport
-		res.createFlight("DEL", "DEN", "LON", 2018, 9, 8, "567"); 			//invalid airline
-		res.createFlight("DELTA", "LON33", "DEN33", 2019, 5, 7, "123");		//invalid airports
+		res.createFlight("DELTA", "DEN", "LON", 2019, 10, 10, "123");
+		res.createFlight("DELTA", "DEN", "DEN", 2019, 8, 8, "567abc");		//same airport
+		res.createFlight("DEL", "DEN", "LON", 2019, 9, 8, "567"); 			//invalid airline
+		res.createFlight("DELTA", "LON33", "DEN33", 2019, 7, 7, "123");		//invalid airports
 		res.createFlight("AMER", "DEN", "LON", 2010, 40, 100, "123abc");	//invalid date
 		
 		res.createSection("DELTA","123", 2, 2, SeatClass.economy);
