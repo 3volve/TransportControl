@@ -15,4 +15,17 @@ public class Airline
 	String getName() { return name; }
 	
 	HashMap<String, Flight> getFlights() { return flights; }
+	
+	boolean hasFlight( String orig, String dest ) {
+		for( Flight fly : flights.values() )
+			if( fly.origAndDestMatch(orig, dest) ) return true;
+		
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		if( !flights.isEmpty() ) return name + " with flights: " + flights.values();
+		return name;
+	}
 }

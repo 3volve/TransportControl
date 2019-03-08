@@ -8,9 +8,12 @@ public class FlightSection
 	FlightSection( SeatClass sC, int r, int c ) {
 		seatClass = sC;
 		
-		for( int row = 0; row < r; row++ )
-			for( int col = 0; col < c; col++ )
+		for( int row = 0; row < r; row++ ) {
+			seats = new Seat[r][c];
+			
+			for( int col = 0; col < c; col++ ) 
 				seats[row][col] = new Seat(r + 1, (char)(c + 65));
+		}
 	}
 	
 	//returns true iff the section has some seats that are not booked
@@ -30,5 +33,9 @@ public class FlightSection
 			if( col.isAvailable() ) return col;
 		
 		return null;
+	}
+	
+	public String toString() {
+		return seatClass + " class section containing " + seats.length + " seats";
 	}
 }

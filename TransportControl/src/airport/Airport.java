@@ -1,6 +1,6 @@
 package airport;
 
-public class Airport implements Comparable<Airport>
+public class Airport
 {
 	private String name;
 	
@@ -8,11 +8,4 @@ public class Airport implements Comparable<Airport>
 	
 	@Override
 	public String toString() { return name; }
-	
-	boolean equals( Airport that )
-	{ return name.equals(that.toString()); }
-
-	@Override
-	public int compareTo( Airport that )
-	{ return name.compareTo(that.toString()); }
 }

@@ -15,8 +15,19 @@ public class Flight
 	}
 	
 	void addFlightSection( FlightSection section ) { flightSections.put(section.getSeatClass(), section); }
+
+	boolean origAndDestMatch( String o, String d ) {
+		if( o.equals(orig) && d.equals(dest) ) return true;
+		
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return "Flight " + ID + " traveling from " + orig + " to " + dest + " on " + day + "/" + month + "/" + year +
+			   " with Flight Sections:\n\t\t\t" + flightSections.values().toString();
+	}
 	
 	String getID() { return ID; }
-	
 	HashMap<SeatClass, FlightSection> getFlightSections() { return flightSections; }
 }
