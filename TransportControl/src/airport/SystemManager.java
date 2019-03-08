@@ -73,8 +73,4 @@ public class SystemManager
 		
 	}
 	
-	HashMap<String, Airport> getAirports() { return airports; }
-	
-	HashMap<String, Airline> getAirlines() { return airlines; }
-	
 }
