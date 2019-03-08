@@ -28,9 +28,9 @@ public class SystemManager
 		String errorStr = ("Flight " + id + " for airline " + aName + " was unable to be created: ");
 		
 		if( orig.equals(dest) ) errorStr += "same airport at origin and destination.";
-		else if( !airlines.containsKey(aName) ) errorStr += "no airline of the name, " + aName;
+		else if( !airlines.containsKey(aName) ) errorStr += "no airline of the name: " + aName + ".";
 		//else if( airlines.containsKey(aName) ) System.out.println(aName + " has been found to be contained.");
-		else if( !airports.containsKey(orig) || !airports.containsKey(dest) ) errorStr += "invalid airport " + orig + " and/or " + dest;
+		else if( !airports.containsKey(orig) || !airports.containsKey(dest) ) errorStr += "invalid airport " + orig + " and/or " + dest +".";
 		else if( year < 2019 || (year < 2019 && month < 6) ) errorStr += "cannot create flight in the past.";
 		else if( !airlines.get(aName).addFlight(new Flight(orig, dest, year, month, day, id)) ) errorStr += "flight already created.";
 		
