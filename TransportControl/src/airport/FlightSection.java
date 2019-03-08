@@ -18,4 +18,6 @@ public class FlightSection
 	
 	//book an available seat
 	void bookSeat() {}
+	
+	SeatClass getSeatClass() { return seatClass; }
 }
