@@ -1,4 +1,4 @@
-package airport;
+package airManager;
 
 public class FlightSection
 {
@@ -26,6 +26,14 @@ public class FlightSection
 		findAvailableSeat().bookSeat();
 	}
 	
+	void bookCertainSeat( int row, char col) {
+		seats[row][col - 65].bookSeat();
+	}
+	
+	boolean isSeatAvailable( int row, char col ) {
+		return seats[row][col - 65].isAvailable();
+	}
+	
 	SeatClass getSeatClass() { return seatClass; }
 	
 	Seat findAvailableSeat() {
@@ -36,6 +44,6 @@ public class FlightSection
 	}
 	
 	public String toString() {
-		return seatClass + " class section containing " + seats.length + " seats";
+		return seatClass + " class section containing " + (seats[0].length * seats.length) + " seats";
 	}
 }

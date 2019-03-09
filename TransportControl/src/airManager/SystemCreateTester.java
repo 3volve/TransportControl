@@ -1,4 +1,4 @@
-package airport;
+package airManager;
 
 public class SystemCreateTester {
 	static boolean systemCreateTest( String BaseErrorStr, boolean[] conditions, String... errorMsgs ) {

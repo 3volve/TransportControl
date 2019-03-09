@@ -1,4 +1,4 @@
-package airport;
+package airManager;
 
 import java.util.*;
 
@@ -74,7 +74,15 @@ public class SystemManager
 	
 	//Books seat in given row and column in section s, on flight fl of airline air.
 	public void bookSeat( String air, String fl, SeatClass s, int row, char col ) {
+		String BaseErrorStr = "Seat in " + s + " class, of flight " + fl + " for airline " + air + " was unable to be created: ";
+
+		boolean[] conditions = new boolean[] {!airlines.containsKey(air), false, false};
+		if( !conditions[0] ) conditions[1] = !airlines.get(air).getFlights().containsKey(fl);
+		if( !conditions[0] && !conditions[1] ) conditions[2] = airlines.get(air).getFlights().get(fl).getFlightSections().get(s).isSeatAvailable(row, col);
 		
+		if( SystemCreateTester.systemCreateTest(BaseErrorStr, conditions, "no airline named " + air + ".", "no flight with ID " + fl + ".",
+																		  "Seat " + row + col + " is already booked.") )
+			airlines.get(air).getFlights().get(fl).getFlightSections().get(s).bookCertainSeat(row, col);
 	}
 	
 	//Displays attribute values for all objects (e.g., airports, airplanes) in system. 

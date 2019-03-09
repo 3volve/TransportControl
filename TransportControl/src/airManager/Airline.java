@@ -1,4 +1,4 @@
-package airport;
+package airManager;
 
 import java.util.HashMap;
 public class Airline
