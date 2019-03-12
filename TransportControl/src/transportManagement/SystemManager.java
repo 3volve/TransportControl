@@ -1,44 +1,45 @@
-package airManager;
+package transportManagement;
 
 import java.util.*;
 
 public class SystemManager
 {	
-	private HashMap<String, Airport> airports; private HashMap<String, Airline> airlines;
+	private HashMap<String, City> cities; private HashMap<String, TransportLine> lines;
 	
 	public SystemManager() {
-		airports = new HashMap<String, Airport>();
-		airlines = new HashMap<String, Airline>();
+		cities = new HashMap<String, City>();
+		lines = new HashMap<String, TransportLine>();
 	}
 	
 	//Creates an airport object and links it to the SystemManager.  The airport will have a name (code) n; n must have exactly three characters.  No two airports can have the same name.
-	public void createAirport( String n ) {	
-		String BaseErrorStr = "Airport " + n + " was unable to be created: "; int nameSize = 3;
-		boolean[] conditions = new boolean[] {airports.containsKey(n), n.length() != nameSize};
+	public void initializeCity( String name ) {	
+		String BaseErrorStr = "City " + name + " was unable to be initialized: "; int nameSize = 3;
+		boolean[] conditions = new boolean[] {cities.containsKey(name), name.length() != nameSize};
 		
 		if( SystemCreateTester.systemCreateTest(BaseErrorStr, conditions,	"duplicate name.", "incorrect airport naming syntax." ) )
-			airports.put(n, new Airport(n));
+			cities.put(name, new City(name));
 	}
 	
 	//Creates an airline object with name n and links it to the SystemManager.  An airline has a name that must have a length less than 6.  No two airlines can have the same name.
-	public void createAirline( String n ) {
-		String errorStr = "Airline " + n + " was unable to be created: "; int nameMinSize = 1, nameMaxSize = 5;
-		boolean[] conditions = new boolean[] {airlines.containsKey(n), n.length() < nameMinSize || nameMaxSize < n.length()};
+	public void createTransportLine( String type, String name ) {
+		String errorStr = type + " " + name + " was unable to be created: "; int nameMinSize = 1, nameMaxSize = 5;
+		boolean[] conditions = new boolean[] {lines.containsKey(name), name.length() < nameMinSize || nameMaxSize < name.length()};
+		TransportLineFactory lineFactory = new TransportLineFactory();
 		
 		if( SystemCreateTester.systemCreateTest(errorStr, conditions, "duplicate name.", "incorrect airlines naming syntax.") )
-			airlines.put(n, new Airline(n));
+			lines.put(name, lineFactory.createTransportLine(type, name));
 	}
 	
 	//Creates a flight for an airline named aName, from an originating airport (orig) to a destination airport (dest) on a particular date.  The flight has an identifier (id).
 	public void createFlight( String aName, String orig, String dest, int year, int month, int day, String id ) {
 		String BaseErrorStr = "Flight " + id + " for airline " + aName + " was unable to be created: "; 	int curYear = 2019, curMonth = 3, maxMonth = 12, maxDays = 31;
-		boolean[] conditions = new boolean[] {orig.equals(dest), !airlines.containsKey(aName), !airports.containsKey(orig) || !airports.containsKey(dest), 
+		boolean[] conditions = new boolean[] {orig.equals(dest), !lines.containsKey(aName), !cities.containsKey(orig) || !cities.containsKey(dest), 
 											  year < curYear || (year < curYear && month < curMonth), maxMonth < month || maxDays < day};
 		
 		if( SystemCreateTester.systemCreateTest(BaseErrorStr, conditions, "same airport at origin and destination.", "no airline named " + aName + ".",
 														   "invalid airport " + orig + " and/or " + dest + ".", "cannot create flight in the past.",
 														   "invalid days and/or months") )
-			if( !airlines.get(aName).addFlight(new Flight(orig, dest, year, month, day, id)) )
+			if( !lines.get(aName).addTransit(new Flight(orig, dest, year, month, day, id)) )
 				System.out.println(BaseErrorStr + "duplicate error.");
 	}
 	
@@ -46,11 +47,11 @@ public class SystemManager
 	public void createSection( String air, String flID, int rows, int cols, SeatClass s ) {
 		String BaseErrorStr = "FlightSection " + s + " class, of flight " + flID + " for airline " + air + " was unable to be created: ";
 		int maxRows = 100, maxCols = 10;
-		boolean[] conditions = new boolean[] { rows <= 0 || cols <= 0 || maxRows < rows || maxCols < cols, !airlines.containsKey(air), false };
-		if( !conditions[1] ) conditions[2] = airlines.get(air).getFlights().get(flID).getFlightSections().containsKey(s);
+		boolean[] conditions = new boolean[] { rows <= 0 || cols <= 0 || maxRows < rows || maxCols < cols, !lines.containsKey(air), false };
+		if( !conditions[1] ) conditions[2] = lines.get(air).getTransits().get(flID).getFlightSections().containsKey(s);
 		
 		if( SystemCreateTester.systemCreateTest(BaseErrorStr, conditions, "incorrect # of rows.", " no airline named " + air + ".", "duplicate SeatClass."))
-			airlines.get(air).getFlights().get(flID).addFlightSection(new FlightSection(s, rows, cols));
+			lines.get(air).getFlights().get(flID).addFlightSection(new FlightSection(s, rows, cols));
 	}
 	
 	//Finds all flights from airport orig to airport dest with seats that are not booked.
@@ -82,7 +83,7 @@ public class SystemManager
 		
 		if( SystemCreateTester.systemCreateTest(BaseErrorStr, conditions, "no airline named " + air + ".", "no flight with ID " + fl + ".",
 																		  "Seat " + row + col + " is already booked.") )
-			airlines.get(air).getFlights().get(fl).getFlightSections().get(s).bookCertainSeat(row, col);
+			airlines.get(air).getFlights().get(fl).getFlightSections().get(s).bookSeat(row, col);
 	}
 	
 	//Displays attribute values for all objects (e.g., airports, airplanes) in system. 

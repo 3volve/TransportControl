@@ -1,10 +1,10 @@
-package airManager;
+package transportManagement;
 
-public class Airport
+public class City
 {
 	private String name;
 	
-	Airport( String n ) { name = n; }
+	City( String n ) { name = n; }
 	
 	@Override
 	public String toString() { return name; }

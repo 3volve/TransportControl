@@ -1,8 +1,8 @@
-package airManager;
+package transportManagement;
 
 import java.util.HashMap;
 
-public class Flight
+public class Flight extends Transition
 {
 	private String orig, dest, ID;
 	private int year, month, day;
@@ -28,6 +28,7 @@ public class Flight
 			   " with Flight Sections:\n\t\t\t" + flightSections.values().toString();
 	}
 	
-	String getID() { return ID; }
 	HashMap<SeatClass, FlightSection> getFlightSections() { return flightSections; }
+
+	public String getID() { return ID; }
 }

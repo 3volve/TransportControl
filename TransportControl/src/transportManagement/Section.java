@@ -1,4 +1,4 @@
-package airManager;
+package transportManagement;
 
 public class FlightSection
 {
@@ -16,17 +16,7 @@ public class FlightSection
 		}
 	}
 	
-	//returns true iff the section has some seats that are not booked
-	boolean hasAvailableSeats() {
-		return findAvailableSeat() != null;
-	}
-	
-	//book an available seat
-	void bookSeat() {
-		findAvailableSeat().bookSeat();
-	}
-	
-	void bookCertainSeat( int row, char col) {
+	void bookSeat( int row, char col) {
 		seats[row][col - 65].bookSeat();
 	}
 	
@@ -35,13 +25,6 @@ public class FlightSection
 	}
 	
 	SeatClass getSeatClass() { return seatClass; }
-	
-	Seat findAvailableSeat() {
-		for( Seat[] row : seats ) for( Seat col : row )
-			if( col.isAvailable() ) return col;
-		
-		return null;
-	}
 	
 	public String toString() {
 		return seatClass + " class section containing " + (seats[0].length * seats.length) + " seats";

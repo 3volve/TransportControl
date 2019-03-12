@@ -1,4 +1,4 @@
-package airManager;
+package transportManagement;
 
 public class Seat
 {
