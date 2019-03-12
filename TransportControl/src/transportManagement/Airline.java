@@ -8,9 +8,9 @@ public class Airline extends TransportLine
 		return transits.putIfAbsent(flight.getID(), flight) == null;
 	}
 	
-	boolean hasFlight( String orig, String dest ) {
+	boolean hasTransit( String orig, String dest ) {
 		for( Transition fly : transits.values() )
-			if( fly.origAndDestMatch(orig, dest) ) return true;
+			if( fly.hasCities(orig, dest) ) return true;
 		
 		return false;
 	}
