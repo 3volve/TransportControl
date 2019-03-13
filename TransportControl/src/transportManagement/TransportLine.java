@@ -9,9 +9,17 @@ public abstract class TransportLine {
 	
 	TransportLine( String n ) { name = n; transits = new HashMap<String, Transition>(); }
 	
-	abstract boolean addTransit( Transition trans );
+	boolean addTransit( Transition transit ) {
+		return transits.putIfAbsent(transit.getID(), transit) == null;
+	}
 
 	HashMap<String, Transition> getTransits() { return transits; }
 
 	abstract boolean hasTransit(String orig, String dest);
+
+	final boolean isDuplicate(Transition transit) {
+		if( transits.containsValue(transit) ) return true;
+		
+		return false;
+	}
 }

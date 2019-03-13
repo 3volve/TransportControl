@@ -25,25 +25,18 @@ public class SystemManager
 	
 	//Creates an airline object with name n and links it to the SystemManager.  An airline has a name that must have a length less than 6.  No two airlines can have the same name.
 	public void createTransportLine( String type, String name ) {
-		String errorStr = type + " " + name + " was unable to be created: "; int nameMinSize = 1, nameMaxSize = 5;
-		boolean[] conditions = new boolean[] {lines.containsKey(name), name.length() < nameMinSize || nameMaxSize < name.length()};
 		TransportFactory lineFactory = TransportFactory.createSpecificFactory(type);
+		TransportLine line = lineFactory.createTransportLine(name, lines.get(type));
 		
-		if( SystemCreateTester.systemCreateTest(errorStr, conditions, "duplicate name.", "incorrect airlines naming syntax.") )
-			lines.get(type).put(name, lineFactory.createTransportLine( name));
+		if( line != null ) lines.get(type).put(name, line);
 	}
 	
 	//Creates a flight for an airline named aName, from an originating airport (orig) to a destination airport (dest) on a particular date.  The flight has an identifier (id).
-	public void createTransit( String type, String aName, String orig, String dest, int year, int month, int day, String id ) {
-		String BaseErrorStr = "Flight " + id + " for airline " + aName + " was unable to be created: "; 	int curYear = 2019, curMonth = 3, maxMonth = 12, maxDays = 31;
-		boolean[] conditions = new boolean[] {orig.equals(dest), !lines.containsKey(aName), !cities.containsKey(orig) || !cities.containsKey(dest), 
-											  year < curYear || (year < curYear && month < curMonth), maxMonth < month || maxDays < day};
+	public void createTransit( String type, String lineName, String orig, String dest, int year, int month, int day, String id ) {
+		TransportFactory transFactory = TransportFactory.createSpecificFactory(type);
+		Transition transit = transFactory.createTransition(lineName, orig, dest, year, month, day, id, lines.get(type), cities);
 		
-		if( SystemCreateTester.systemCreateTest(BaseErrorStr, conditions, "same airport at origin and destination.", "no airline named " + aName + ".",
-														   "invalid airport " + orig + " and/or " + dest + ".", "cannot create flight in the past.",
-														   "invalid days and/or months") )
-			if( !lines.get(type).get(aName).addTransit(new Flight(orig, dest, year, month, day, id)) )
-				System.out.println(BaseErrorStr + "duplicate error.");
+		if( transit != null ) lines.get(type).get(lineName).addTransit(transit);
 	}
 	
 	//Creates a section, of class s, for a flight with identifier flID, associated with an airline, air.  The section will contain the input number of rows and columns.

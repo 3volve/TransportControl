@@ -4,10 +4,7 @@ public class Airline extends TransportLine
 {
 	Airline( String n ) { super(n); }
 	
-	boolean addTransit( Transition flight ) {
-		return transits.putIfAbsent(flight.getID(), flight) == null;
-	}
-	
+	@Override
 	boolean hasTransit( String orig, String dest ) {
 		for( Transition fly : transits.values() )
 			if( fly.hasCities(orig, dest) ) return true;
@@ -18,6 +15,7 @@ public class Airline extends TransportLine
 	@Override
 	public String toString() {
 		if( !transits.isEmpty() ) return name + " with flights: " + transits.values();
+		
 		return name;
 	}
 }
