@@ -8,7 +8,13 @@ class CruiseFactory implements TransportFactory {
 		return null;
 	}
 
-	static Transition createTransition( TransitionDataClass data ) {
+	static Transition createTransition( Transition.DataClass data ) {
+		
+		
+		return null;
+	}
+	
+	static Section createSection( Section.DataClass data ) {
 		
 		
 		return null;

@@ -18,7 +18,7 @@ interface TransportFactory {
 		return null;
 	}
 	
-	static Transition createTransition( String type, TransitionDataClass data ) {
+	static Transition createTransition( String type, Transition.DataClass data ) {
 
 		switch( type )
 		{
@@ -27,6 +27,20 @@ interface TransportFactory {
 			case( "Train" ) : return TrainFactory.createTransition(data);
 			
 			case( "Cruise" ) : return CruiseFactory.createTransition(data);
+		}
+		
+		return new NullTransition();
+	}
+	
+	static Section createSection( String type, Section.DataClass data ) {
+
+		switch( type )
+		{
+			case( "Air" ) : return AirFactory.createSection(data);
+			
+			case( "Train" ) : return TrainFactory.createSection(data);
+			
+			case( "Cruise" ) : return CruiseFactory.createSection(data);
 		}
 		
 		return null;

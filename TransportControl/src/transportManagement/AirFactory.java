@@ -14,7 +14,7 @@ class AirFactory implements TransportFactory {
 		return null;
 	}
 
-	static Transition createTransition( TransitionDataClass data ) {
+	static Transition createTransition( Transition.DataClass data ) {
 		String BaseErrorStr = "Flight " + data.ID + " for airline " + data.lName + " was unable to be created: "; 	int curYear = 2019, curMonth = 3, maxMonth = 12, maxDays = 31;
 		Transition flight = new Flight(data.orig, data.year, data.month, data.day, data.ID, data.dest[0]);
 		boolean[] conditions = new boolean[] { data.orig.equals(data.dest), !data.lines.containsKey(data.lName),
@@ -25,6 +25,16 @@ class AirFactory implements TransportFactory {
 														   "invalid airport " + data.orig + " and/or " + data.dest + ".", "cannot create flight in the past.",
 														   "invalid days and/or months", "duplicate error.") )
 			return new Flight( data.orig, data.year, data.month, data.day, data.ID, data.dest[0] );
+		
+		return new NullTransition();
+	}
+	
+	static Section createSection( Section.DataClass data ) {
+		String BaseErrorStr = "FlightSection " + data.seatClass + " class, of flight " + data.flID + " for airline " + data.airline + " was unable to be created: ";
+		int maxRows = 100, maxCols = 10;
+		
+		boolean[] conditions = new boolean[] { data.rows <= 0 || data.cols <= 0 || maxRows < data.rows || maxCols < data.cols, !data.lines.containsKey(data.airline), false };
+		if( !conditions[1] ) conditions[2] = data.lines.get(data.airline).getTransits().get(data.flID).getSections().containsKey(data.seatClass);
 		
 		return null;
 	}
