@@ -1,13 +1,13 @@
 package transportManagement;
 
-public class Airline extends TransportLine
+class Airline extends TransportLine
 {
 	Airline( String n ) { super(n); }
 	
 	@Override
-	boolean hasTransit( String orig, String dest ) {
+	boolean hasTransit( String orig, String... dest ) {
 		for( Transition fly : transits.values() )
-			if( fly.hasCities(orig, dest) ) return true;
+			if( fly.hasCities(orig, dest[0]) ) return true;
 		
 		return false;
 	}

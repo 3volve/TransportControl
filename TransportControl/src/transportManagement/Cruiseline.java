@@ -1,6 +1,6 @@
 package transportManagement;
 
-public class Cruiseline extends TransportLine {
+class Cruiseline extends TransportLine {
 
 	Cruiseline(String n) { super(n); }
 
@@ -9,7 +9,9 @@ public class Cruiseline extends TransportLine {
 		return false;
 	}
 
-	protected boolean hasTransit(String orig, String dest) {
+	@Override
+	boolean hasTransit(String orig, String... dest) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 

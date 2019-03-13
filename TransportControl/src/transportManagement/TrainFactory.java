@@ -2,15 +2,15 @@ package transportManagement;
 
 import java.util.HashMap;
 
-public class TrainFactory implements TransportFactory {
+class TrainFactory implements TransportFactory {
 
-	@Override
-	public TransportLine createTransportLine(String name,  HashMap<String, TransportLine> trainlines) {
+	static TransportLine createTransportLine(String name,  HashMap<String, TransportLine> trainlines) {
 		return null;
 	}
 
-	@Override
-	public Transition createTransition( String lName, String orig, String dest, int year, int month, int day, String id,  HashMap<String, TransportLine> trainlines, HashMap<String, City> cities ) {
+	static Transition createTransition( TransitionDataClass data ) {
+		
+		
 		return null;
 	}
 

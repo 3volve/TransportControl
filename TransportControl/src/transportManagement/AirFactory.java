@@ -2,9 +2,9 @@ package transportManagement;
 
 import java.util.HashMap;
 
-public class AirFactory implements TransportFactory {
+class AirFactory implements TransportFactory {
 
-	public TransportLine createTransportLine( String name, HashMap<String, TransportLine> airlines ) {
+	static TransportLine createTransportLine( String name, HashMap<String, TransportLine> airlines ) {
 		String errorStr = "Airline " + name + " was unable to be created: "; int nameMinSize = 1, nameMaxSize = 5;
 		boolean[] conditions = new boolean[] {airlines.containsKey(name), name.length() < nameMinSize || nameMaxSize < name.length()};
 		
@@ -14,16 +14,17 @@ public class AirFactory implements TransportFactory {
 		return null;
 	}
 
-	public Transition createTransition( String lName, String orig, String dest, int year, int month, int day, String id,  HashMap<String, TransportLine> airlines, HashMap<String, City> cities ) {
-		String BaseErrorStr = "Flight " + id + " for airline " + lName + " was unable to be created: "; 	int curYear = 2019, curMonth = 3, maxMonth = 12, maxDays = 31;
-		Transition flight = new Flight(orig, dest, year, month, day, id);
-		boolean[] conditions = new boolean[] {orig.equals(dest), !airlines.containsKey(lName), !cities.containsKey(orig) || !cities.containsKey(dest), 
-											  year < curYear || (year < curYear && month < curMonth), maxMonth < month || maxDays < day, airlines.get(lName).isDuplicate(flight)};
+	static Transition createTransition( TransitionDataClass data ) {
+		String BaseErrorStr = "Flight " + data.ID + " for airline " + data.lName + " was unable to be created: "; 	int curYear = 2019, curMonth = 3, maxMonth = 12, maxDays = 31;
+		Transition flight = new Flight(data.orig, data.year, data.month, data.day, data.ID, data.dest[0]);
+		boolean[] conditions = new boolean[] { data.orig.equals(data.dest), !data.lines.containsKey(data.lName),
+				!data.cities.containsKey(data.orig) || !data.cities.containsKey(data.dest), data.year < curYear || (data.year < curYear && data.month < curMonth),
+				maxMonth < data.month || maxDays < data.day, data.lines.get(data.lName).isDuplicate(flight) };
 		
-		if( SystemCreateTester.systemCreateTest(BaseErrorStr, conditions, "same airport at origin and destination.", "no airline named " + lName + ".",
-														   "invalid airport " + orig + " and/or " + dest + ".", "cannot create flight in the past.",
+		if( SystemCreateTester.systemCreateTest(BaseErrorStr, conditions, "same airport at origin and destination.", "no airline named " + data.lName + ".",
+														   "invalid airport " + data.orig + " and/or " + data.dest + ".", "cannot create flight in the past.",
 														   "invalid days and/or months", "duplicate error.") )
-			return new Flight( orig, dest, year, month, day, id );
+			return new Flight( data.orig, data.year, data.month, data.day, data.ID, data.dest[0] );
 		
 		return null;
 	}

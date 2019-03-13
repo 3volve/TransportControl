@@ -25,16 +25,14 @@ public class SystemManager
 	
 	//Creates an airline object with name n and links it to the SystemManager.  An airline has a name that must have a length less than 6.  No two airlines can have the same name.
 	public void createTransportLine( String type, String name ) {
-		TransportFactory lineFactory = TransportFactory.createSpecificFactory(type);
-		TransportLine line = lineFactory.createTransportLine(name, lines.get(type));
+		TransportLine line = TransportFactory.createTransportLine(type, name, lines.get(type));
 		
 		if( line != null ) lines.get(type).put(name, line);
 	}
 	
 	//Creates a flight for an airline named aName, from an originating airport (orig) to a destination airport (dest) on a particular date.  The flight has an identifier (id).
 	public void createTransit( String type, String lineName, String orig, String dest, int year, int month, int day, String id ) {
-		TransportFactory transFactory = TransportFactory.createSpecificFactory(type);
-		Transition transit = transFactory.createTransition(lineName, orig, dest, year, month, day, id, lines.get(type), cities);
+		Transition transit = TransportFactory.createTransition(type, new TransitionDataClass(lineName, orig, year, month, day, id, lines.get(type), cities,  dest));
 		
 		if( transit != null ) lines.get(type).get(lineName).addTransit(transit);
 	}
@@ -90,4 +88,8 @@ public class SystemManager
 		for( TransportLine line : lines.get(type).values() )
 			System.out.println(line.toString());
 	}
+	
+	/*public boolean cityExists( String city ) { return cities.containsKey(city); }
+	
+	public boolean lineExists( String type, String line ) { return lines.get(type).containsKey(line); }*/
 }

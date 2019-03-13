@@ -2,13 +2,13 @@ package transportManagement;
 
 import java.util.HashMap;
 
-public class Flight extends Transition
+class Flight extends Transition
 {
 	private String orig, dest, ID;
 	private int year, month, day;
 	private HashMap<SeatClass, Section> flightSections;
 	
-	Flight( String or, String de, int ye, int mo, int da, String id ) {
+	Flight( String or, int ye, int mo, int da, String id, String de ) {
 		orig = or; dest = de; ID = id;
 		year = ye; month = mo; day = da; 
 		flightSections = new HashMap<SeatClass, Section>();
@@ -16,8 +16,8 @@ public class Flight extends Transition
 	
 	void addSection( Section section ) { flightSections.put(section.getSeatClass(), section); }
 
-	boolean hasCities( String o, String d ) {
-		if( o.equals(orig) && d.equals(dest) ) return true;
+	boolean hasCities( String o, String... d ) {
+		if( o.equals(orig) && d[0].equals(dest) ) return true;
 		
 		return false;
 	}

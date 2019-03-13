@@ -1,6 +1,6 @@
 package transportManagement;
 
-public class Section
+class Section
 {
 	private SeatClass seatClass;
 	private Seat[][] seats; //A flight section can contain at most 100 rows of seats and at most 10 columns of seats.

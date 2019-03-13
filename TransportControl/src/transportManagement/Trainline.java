@@ -1,8 +1,6 @@
 package transportManagement;
 
-import java.util.HashMap;
-
-public class Trainline extends TransportLine
+class Trainline extends TransportLine
 {
 	Trainline( String n ) { super(n); }
 
@@ -12,9 +10,9 @@ public class Trainline extends TransportLine
 	}
 
 	@Override
-	boolean hasTransit(String orig, String dest) {
-		for( Transition fly : transits.values() )
-			if( fly.hasCities(orig, dest) ) return true;
+	boolean hasTransit(String orig, String... dest) {
+		for( Transition transit : transits.values() )
+			if( transit.hasCities(orig, dest) ) return true;
 		
 		return false;
 	}

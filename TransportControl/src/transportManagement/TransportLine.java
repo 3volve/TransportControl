@@ -2,7 +2,7 @@ package transportManagement;
 
 import java.util.HashMap;
 
-public abstract class TransportLine {
+abstract class TransportLine {
 
 	protected String name;
 	protected HashMap<String, Transition> transits;
@@ -15,7 +15,7 @@ public abstract class TransportLine {
 
 	HashMap<String, Transition> getTransits() { return transits; }
 
-	abstract boolean hasTransit(String orig, String dest);
+	abstract boolean hasTransit(String orig, String... dest);
 
 	final boolean isDuplicate(Transition transit) {
 		if( transits.containsValue(transit) ) return true;

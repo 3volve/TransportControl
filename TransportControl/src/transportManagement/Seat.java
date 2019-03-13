@@ -1,6 +1,6 @@
 package transportManagement;
 
-public class Seat
+class Seat
 {
 	private int row;
 	private char col;

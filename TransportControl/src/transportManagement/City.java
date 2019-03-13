@@ -1,6 +1,6 @@
 package transportManagement;
 
-public class City
+class City
 {
 	private String name;
 	

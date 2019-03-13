@@ -4,18 +4,29 @@ import java.util.HashMap;
 
 interface TransportFactory {
 
-	TransportLine createTransportLine( String name, HashMap<String, TransportLine> lines );
-	
-	Transition createTransition( String lName, String orig, String dest, int year, int month, int day, String id, HashMap<String, TransportLine> airlines, HashMap<String, City> cities );
-	
-	static TransportFactory createSpecificFactory( String type ) {
+	static TransportLine createTransportLine( String type, String name, HashMap<String, TransportLine> lines ) {
+		
 		switch( type )
 		{
-			case( "Air" ) : return new AirFactory();
+			case( "Air" ) : return AirFactory.createTransportLine(name, lines);
 			
-			case( "Train" ) : return new TrainFactory();
+			case( "Train" ) : return TrainFactory.createTransportLine(name, lines);
 			
-			case( "Cruise" ) : return new CruiseFactory();
+			case( "Cruise" ) : return CruiseFactory.createTransportLine(name, lines);
+		}
+		
+		return null;
+	}
+	
+	static Transition createTransition( String type, TransitionDataClass data ) {
+
+		switch( type )
+		{
+			case( "Air" ) : return AirFactory.createTransition(data);
+			
+			case( "Train" ) : return TrainFactory.createTransition(data);
+			
+			case( "Cruise" ) : return CruiseFactory.createTransition(data);
 		}
 		
 		return null;
