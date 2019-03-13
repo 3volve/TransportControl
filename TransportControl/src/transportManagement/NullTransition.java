@@ -13,9 +13,9 @@ public class NullTransition extends Transition {
 	String getID() { return "This is a null Transition"; }
 
 	@Override
-	void addSection(Section section) {}
+	void addSection(AirSection section) {}
 
 	@Override
-	HashMap<SeatClass, Section> getSections() { return new HashMap<SeatClass, Section>(); }
+	HashMap<SeatClass, AirSection> getSections() { return new HashMap<SeatClass, AirSection>(); }
 
 }

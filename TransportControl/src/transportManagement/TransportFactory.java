@@ -32,7 +32,7 @@ interface TransportFactory {
 		return new NullTransition();
 	}
 	
-	static Section createSection( String type, Section.DataClass data ) {
+	static TransportSection createSection( String type, AirSection.DataClass data ) {
 
 		switch( type )
 		{
@@ -43,6 +43,6 @@ interface TransportFactory {
 			case( "Cruise" ) : return CruiseFactory.createSection(data);
 		}
 		
-		return null;
+		return new NullSection();
 	}
 }

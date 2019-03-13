@@ -29,14 +29,17 @@ class AirFactory implements TransportFactory {
 		return new NullTransition();
 	}
 	
-	static Section createSection( Section.DataClass data ) {
+	static TransportSection createSection( AirSection.DataClass data ) {
 		String BaseErrorStr = "FlightSection " + data.seatClass + " class, of flight " + data.flID + " for airline " + data.airline + " was unable to be created: ";
 		int maxRows = 100, maxCols = 10;
 		
 		boolean[] conditions = new boolean[] { data.rows <= 0 || data.cols <= 0 || maxRows < data.rows || maxCols < data.cols, !data.lines.containsKey(data.airline), false };
 		if( !conditions[1] ) conditions[2] = data.lines.get(data.airline).getTransits().get(data.flID).getSections().containsKey(data.seatClass);
 		
-		return null;
+		if( SystemCreateTester.systemCreateTest(BaseErrorStr, conditions, "incorrect # of rows.", " no airline named " + data.airline + ".", "duplicate SeatClass."))
+			return new AirSection(data.seatClass, data.rows, data.cols);
+			
+		return new NullSection();
 	}
 
 }

@@ -2,12 +2,12 @@ package transportManagement;
 
 import java.util.HashMap;
 
-class Section
+class AirSection extends TransportSection
 {
 	private SeatClass seatClass;
 	private Seat[][] seats; //A flight section can contain at most 100 rows of seats and at most 10 columns of seats.
 	
-	Section( SeatClass sC, int r, int c ) {
+	AirSection( SeatClass sC, int r, int c ) {
 		seatClass = sC;
 		
 		for( int row = 0; row < r; row++ ) {
@@ -30,19 +30,5 @@ class Section
 	
 	public String toString() {
 		return seatClass + " class section containing " + (seats[0].length * seats.length) + " seats";
-	}
-	
-	class DataClass
-	{
-		String airline, flID;
-		int rows, cols;
-		SeatClass seatClass;
-		HashMap<String, TransportLine> lines;
-		
-		DataClass(String air, String flid, int r, int c, SeatClass s, HashMap<String, TransportLine> l ) {
-			airline = air; flID = flid;
-			rows = r; cols = c;
-			seatClass = s;
-		}
 	}
 }

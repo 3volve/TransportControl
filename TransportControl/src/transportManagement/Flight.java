@@ -6,15 +6,15 @@ class Flight extends Transition
 {
 	private String orig, dest, ID;
 	private int year, month, day;
-	private HashMap<SeatClass, Section> flightSections;
+	private HashMap<SeatClass, AirSection> flightSections;
 	
 	Flight( String or, int ye, int mo, int da, String id, String de ) {
 		orig = or; dest = de; ID = id;
 		year = ye; month = mo; day = da; 
-		flightSections = new HashMap<SeatClass, Section>();
+		flightSections = new HashMap<SeatClass, AirSection>();
 	}
 	
-	void addSection( Section section ) { flightSections.put(section.getSeatClass(), section); }
+	void addSection( AirSection section ) { flightSections.put(section.getSeatClass(), section); }
 
 	boolean hasCities( String o, String... d ) {
 		if( o.equals(orig) && d[0].equals(dest) ) return true;
@@ -28,7 +28,7 @@ class Flight extends Transition
 			   " with Flight Sections:\n\t\t\t" + flightSections.values().toString();
 	}
 	
-	HashMap<SeatClass, Section> getSections() { return flightSections; }
+	HashMap<SeatClass, AirSection> getSections() { return flightSections; }
 
 	public String getID() { return ID; }
 }

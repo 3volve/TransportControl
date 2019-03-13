@@ -14,7 +14,7 @@ class TrainFactory implements TransportFactory {
 		return null;
 	}
 	
-	static Section createSection( Section.DataClass data ) {
+	static AirSection createSection( AirSection.DataClass data ) {
 		
 		
 		return null;
