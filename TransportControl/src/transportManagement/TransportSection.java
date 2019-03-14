@@ -4,7 +4,14 @@ import java.util.HashMap;
 
 public abstract class TransportSection
 {
-
+	abstract void bookSeat( int row, char col);
+	
+	abstract boolean isSeatAvailable( int row, char col );
+	
+	abstract SeatClass getSeatClass();
+	
+	public abstract String toString();
+	
 	class DataClass
 	{
 		String airline, flID;

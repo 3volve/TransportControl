@@ -14,7 +14,7 @@ class CruiseFactory implements TransportFactory {
 		return null;
 	}
 	
-	static AirSection createSection( AirSection.DataClass data ) {
+	static CruiseSection createSection( AirSection.DataClass data ) {
 		
 		
 		return null;
