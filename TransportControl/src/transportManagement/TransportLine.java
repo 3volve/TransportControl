@@ -2,7 +2,7 @@ package transportManagement;
 
 import java.util.HashMap;
 
-abstract class TransportLine {
+public abstract class TransportLine {
 
 	protected String name;
 	protected HashMap<String, Transition> transits;

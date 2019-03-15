@@ -11,17 +11,18 @@ public class SystemManager
 		cities.put("Airline", new HashMap<String, City>());
 		cities.put("Trainline", new HashMap<String, City>());
 		cities.put("Cruiseline", new HashMap<String, City>());
+		
 		lines = new HashMap<String, HashMap<String, TransportLine>>();
-		lines.put("Airline", new HashMap<String, TransportLine>());
-		lines.put("Trainline", new HashMap<String, TransportLine>());
-		lines.put("Cruiseline", new HashMap<String, TransportLine>());
+		lines.put("Airports", new HashMap<String, TransportLine>());
+		lines.put("Trainstations", new HashMap<String, TransportLine>());
+		lines.put("Cruiseports", new HashMap<String, TransportLine>());
 	}
 	
 	public void initializeCity( String type, String name ) {	
 		String BaseErrorStr = type + " named " + name + " was unable to be initialized: "; int nameSize = 3;
 		boolean[] conditions = new boolean[] {cities.get(type).containsKey(name), name.length() != nameSize};
 		
-		if( SystemCreateTester.systemCreateTest(BaseErrorStr, conditions,	"duplicate name.", "incorrect airport naming syntax." ) )
+		if( SystemTester.systemCreateTest(BaseErrorStr, conditions,	"duplicate name.", "incorrect airport naming syntax." ) )
 			cities.get(type).put(name, new City(name));
 	}
 	
@@ -47,39 +48,43 @@ public class SystemManager
 	}
 	
 	public void findAvailableTransits( String type, String orig, String dest ) {
-		ArrayList<Transition> availFlights = new ArrayList<Transition>();
+		ArrayList<Transition> availTransits = new ArrayList<Transition>();
 		
-		for( TransportLine air : lines.get(type).values() ) {
-			if( air.hasTransit(orig, dest) ) {
-				for( Transition fly : air.getTransits().values() )
-					availFlights.add(fly);
+		for( TransportLine line : lines.get(type).values() ) {
+			if( line.hasTransit(orig, dest) ) {
+				for( Transition transit : line.getTransits().values() )
+					availTransits.add(transit);
 			}
 		}
 		
-		if( availFlights.isEmpty() )
-			System.out.println("No flights were found going from " + orig + " to " + dest + ".");
+		if( availTransits.isEmpty() )
+			System.out.println("No transits were found going from " + orig + " to " + dest + ".");
 		
-		System.out.println("\nAll available flights traveling from " + orig + " to " + dest + ": ");
-		System.out.println(availFlights.toString());
+		System.out.println("\nAll available transits traveling from " + orig + " to " + dest + ": ");
+		System.out.println(availTransits.toString());
 	}
 	
 	public void bookSeat( String type, String line, String transit, SeatClass s, int row, char col ) {
-		String BaseErrorStr = "Seat in " + s + " class, of flight " + transit + " for airline " + line + " was unable to be created: ";
+		String BaseErrorStr = "Seat in " + s + " class, of transit " + transit + " for line " + line + " was unable to be created: ";
 
 		boolean[] conditions = new boolean[] {!lines.get(type).containsKey(line), false, false};
 		if( !conditions[0] ) conditions[1] = !lines.get(type).get(line).getTransits().containsKey(transit);
 		if( !conditions[0] && !conditions[1] ) conditions[2] = lines.get(type).get(line).getTransits().get(transit).getSections().get(s).isSeatAvailable(row, col);
 		
-		if( SystemCreateTester.systemCreateTest(BaseErrorStr, conditions, "no airline named " + line + ".", "no flight with ID " + transit + ".",
+		if( SystemTester.systemCreateTest(BaseErrorStr, conditions, "no airline named " + line + ".", "no flight with ID " + transit + ".",
 																		  "Seat " + row + col + " is already booked.") )
 			lines.get(type).get(line).getTransits().get(transit).getSections().get(s).bookSeat(row, col);
 	}
 	
-	public void displaySystemDetails( String type ) {
-		System.out.println("\nAirports: \n" + cities.get(type).values().toString());
-		System.out.println("\nAirlines: ");
+	public void displaySystemDetails() {
+		String[] portType = new String[] {"Airports", "Cruiseports", "Trainstations"}, lineType = new String[] {"Airlines", "Cruiselines", "Trainlines"};
 		
-		for( TransportLine line : lines.get(type).values() )
+		for( int index = 0; index < portType.length; index++ ) {
+			System.out.println(portType[index] + ": " + cities.get(portType[index]).values().toString());
+			System.out.println("\n" + lineType[index] + ": ");
+		
+			for( TransportLine line : lines.get(lineType[index]).values() )
 			System.out.println(line.toString());
+		}
 	}
 }

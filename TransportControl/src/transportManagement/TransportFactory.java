@@ -2,7 +2,7 @@ package transportManagement;
 
 import java.util.HashMap;
 
-interface TransportFactory {
+public interface TransportFactory {
 
 	static TransportLine createTransportLine( String type, String name, HashMap<String, TransportLine> lines ) {
 		

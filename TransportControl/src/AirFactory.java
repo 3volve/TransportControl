@@ -1,6 +1,7 @@
-package transportManagement;
+
 
 import java.util.HashMap;
+import transportManagement.*;
 
 class AirFactory implements TransportFactory {
 

@@ -1,6 +1,9 @@
 package transportManagement;
 
 class Cruiseline extends TransportLine {
+	
+	HashMap<String, Trip> trips;
+	HashMap<String, Ship> ships;
 
 	Cruiseline(String n) { super(n); }
 

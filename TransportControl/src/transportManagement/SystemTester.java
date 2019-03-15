@@ -1,6 +1,6 @@
 package transportManagement;
 
-class SystemCreateTester {
+class SystemTester {
 	static boolean systemCreateTest( String BaseErrorStr, boolean[] conditions, String... errorMsgs ) {
 		for( int index = 0; index < conditions.length; index++ )
 			if( conditions[index] ) { 
