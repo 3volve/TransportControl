@@ -1,5 +1,7 @@
 package transportManagement;
 
+import java.util.HashMap;
+
 class Cruiseline extends TransportLine {
 	
 	HashMap<String, Trip> trips;

@@ -17,13 +17,13 @@ public class Trip extends Transition {
 	}
 
 	@Override
-	void addSection(AirSection section) {
+	void addSection(TransportSection section) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	HashMap<SeatClass, AirSection> getSections() {
+	HashMap<SeatClass, TransportSection> getSections() {
 		// TODO Auto-generated method stub
 		return null;
 	}

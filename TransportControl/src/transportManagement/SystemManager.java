@@ -22,7 +22,7 @@ public class SystemManager
 		String BaseErrorStr = type + " named " + name + " was unable to be initialized: "; int nameSize = 3;
 		boolean[] conditions = new boolean[] {cities.get(type).containsKey(name), name.length() != nameSize};
 		
-		if( SystemTester.systemCreateTest(BaseErrorStr, conditions,	"duplicate name.", "incorrect airport naming syntax." ) )
+		if( SystemTester.systemTest(BaseErrorStr, conditions,	"duplicate name.", "incorrect airport naming syntax." ) )
 			cities.get(type).put(name, new City(name));
 	}
 	
@@ -44,7 +44,7 @@ public class SystemManager
 		section = TransportFactory.createSection(type, section.new DataClass(line, ID, rows, cols, s, lines.get(type)));
 		
 		if( !section.getClass().getSimpleName().startsWith("Null") )
-			lines.get(type).get(line).getTransits().get(ID).addSection(new AirSection(s, rows, cols));
+			lines.get(type).get(line).getTransits().get(ID).addSection(section);
 	}
 	
 	public void findAvailableTransits( String type, String orig, String dest ) {
@@ -71,7 +71,7 @@ public class SystemManager
 		if( !conditions[0] ) conditions[1] = !lines.get(type).get(line).getTransits().containsKey(transit);
 		if( !conditions[0] && !conditions[1] ) conditions[2] = lines.get(type).get(line).getTransits().get(transit).getSections().get(s).isSeatAvailable(row, col);
 		
-		if( SystemTester.systemCreateTest(BaseErrorStr, conditions, "no airline named " + line + ".", "no flight with ID " + transit + ".",
+		if( SystemTester.systemTest(BaseErrorStr, conditions, "no airline named " + line + ".", "no flight with ID " + transit + ".",
 																		  "Seat " + row + col + " is already booked.") )
 			lines.get(type).get(line).getTransits().get(transit).getSections().get(s).bookSeat(row, col);
 	}

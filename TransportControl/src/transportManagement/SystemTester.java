@@ -1,7 +1,7 @@
 package transportManagement;
 
 class SystemTester {
-	static boolean systemCreateTest( String BaseErrorStr, boolean[] conditions, String... errorMsgs ) {
+	static boolean systemTest( String BaseErrorStr, boolean[] conditions, String... errorMsgs ) {
 		for( int index = 0; index < conditions.length; index++ )
 			if( conditions[index] ) { 
 				System.out.println(BaseErrorStr + errorMsgs[index]);

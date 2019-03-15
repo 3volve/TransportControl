@@ -2,7 +2,7 @@ package transportManagement;
 
 import java.util.HashMap;
 
-public abstract class TransportSection
+abstract class TransportSection
 {
 	abstract void bookSeat( int row, char col);
 	

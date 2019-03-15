@@ -8,9 +8,9 @@ abstract class Transition {
 	
 	abstract String getID();
 
-	abstract void addSection(AirSection section);
+	abstract void addSection(TransportSection section);
 
-	abstract HashMap<SeatClass, AirSection> getSections();
+	abstract HashMap<SeatClass, TransportSection> getSections();
 	
 	class DataClass {
 		final String lName, orig, ID;
