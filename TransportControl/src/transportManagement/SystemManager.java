@@ -20,7 +20,7 @@ public class SystemManager
 		lines.put("Cruise", new HashMap<String, TransportLine>());
 	}
 	
-	public void initializeCity( String type, String name ) {	
+	public void createPort( String type, String name ) {	
 		String BaseErrorStr = type + " named " + name + " was unable to be initialized: "; int nameSize = 3;
 		boolean[] conditions = new boolean[] {cities.get(type).containsKey(name), name.length() != nameSize};
 		
@@ -28,24 +28,24 @@ public class SystemManager
 			cities.get(type).put(name, new City(name));
 	}
 	
-	public void createTransportLine( String type, String name ) {
-		if( lines.get(type).containsKey(name) ) System.out.println(type + "line " + name + " was unable to be created: duplicate name.");
+	public void createTransportLine( String type, String... name ) {
+		if( lines.get(type).containsKey(name[0]) ) System.out.println(type + "line " + name[0] + " was unable to be created: duplicate name.");
 		
 		else {
-			TransportLine line = TransportFactory.createTransportLine(type, name, lines.get(type));
+			TransportLine line = TransportFactory.createTransportLine(type, name);
 		
-			if( line != null ) lines.get(type).put(name, line);
+			if( line != null ) lines.get(type).put(name[0], line);
 		}
 	}
 	
-	public void createTransit( String type, String lineName, String orig, int dYear, int dMonth, int dDay, int aYear, int aMonth, int aDay, String id, String... dest ) {
+	public void createTransit( String type, String lineName, String orig, MyDate depart, MyDate arrive, String id, String... dest ) {
 		if( SystemTester.systemTest(type + "transit " + id + " was unable to be created: ",
 				new boolean[] {!lines.get(type).containsKey(lineName), !cities.get(type).containsKey(orig)},
 				"no " + type + "line under the name: " + lineName + ".", "no " + type + "port under the name: " + orig + ".") )
 		{
 		
 			Transition transit = new NullTransition();
-			transit = TransportFactory.createTransition(type, transit.new DataClass(lines.get(type).get(lineName), orig, new MyDate(dDay, dMonth, dYear), new MyDate(aDay, aMonth, aYear), id,  dest));
+			transit = TransportFactory.createTransition(type, transit.new DataClass(lines.get(type).get(lineName), orig, depart, arrive, id,  dest));
 		
 			if( !transit.getClass().getSimpleName().startsWith("Null") ) lines.get(type).get(lineName).addTransit(transit);
 		}

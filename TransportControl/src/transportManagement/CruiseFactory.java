@@ -5,12 +5,16 @@ import transportManagement.supportClasses.SystemTester;
 
 class CruiseFactory implements TransportFactory {
 
-	static TransportLine createTransportLine( String name ) {
+	static TransportLine createTransportLine( String... name ) {
 		int nameMinSize = 1, nameMaxSize = 5;
-		
-		if( name.length() < nameMinSize || nameMaxSize < name.length() )
+		if( name[0].length() < nameMinSize || nameMaxSize < name[0].length() )
 			System.out.println("Cruiseline " + name + " was unable to be created: incorrect cruiseline naming syntax.");
-		else return new Cruiseline(name);
+		else {
+			Cruiseline newCruise = new Cruiseline(name[0]);
+			
+			for( int index = 1; index < name.length; index++ )
+				newCruise.addShip(name[index]);
+		}
 		
 		return null;
 	}

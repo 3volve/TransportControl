@@ -9,6 +9,15 @@ class Cruiseline extends TransportLine {
 
 	Cruiseline(String n) { super(n); }
 
+	boolean addShip( String name ) {
+		if( !ships.containsKey(name) ) {
+			ships.put(name, new CruiseShip(name));
+			return true;
+		}
+		
+		return false;
+	}
+	
 	@Override
 	boolean addTransit(Transition trans) {
 		return false;

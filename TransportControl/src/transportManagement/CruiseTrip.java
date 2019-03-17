@@ -24,8 +24,10 @@ public class CruiseTrip extends Transition
 				return false;
 		
 		return true;
-				
 	}
+	
+	MyDate[] getTripDates() { return new MyDate[] {departDate, arriveDate}; }
+	
 	@Override
 	void addSection(TransportSection section) {
 

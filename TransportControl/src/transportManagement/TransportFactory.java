@@ -1,16 +1,14 @@
 package transportManagement;
 
-import java.util.HashMap;
-
 public interface TransportFactory {
 
-	static TransportLine createTransportLine( String type, String name, HashMap<String, TransportLine> lines ) {
+	static TransportLine createTransportLine( String type, String... name ) {
 		
 		switch( type )
 		{
-			case( "Air" ) : return AirFactory.createTransportLine(name);
+			case( "Air" ) : return AirFactory.createTransportLine(name[0]);
 			
-			case( "Train" ) : return TrainFactory.createTransportLine(name);
+			case( "Train" ) : return TrainFactory.createTransportLine(name[0]);
 			
 			case( "Cruise" ) : return CruiseFactory.createTransportLine(name);
 		}
