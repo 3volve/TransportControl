@@ -9,7 +9,7 @@ class CruiseFactory implements TransportFactory {
 	}
 
 	static Transition createTransition( Transition.DataClass data ) {
-		return new Trip();
+		return new CruiseTrip(data.orig, data.ID, data.departDate, data.arriveDate, data.dest);
 	}
 	
 	static CruiseSection createSection( AirSection.DataClass data ) {

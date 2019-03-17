@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 class Cruiseline extends TransportLine {
 	
-	HashMap<String, Trip> trips;
-	HashMap<String, Ship> ships;
+	HashMap<String, CruiseTrip> trips;
+	HashMap<String, CruiseShip> ships;
 
 	Cruiseline(String n) { super(n); }
 

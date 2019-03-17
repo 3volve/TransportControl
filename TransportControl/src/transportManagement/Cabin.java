@@ -1,5 +1,5 @@
 package transportManagement;
 
-public class Ship {
+public class Cabin {
 
 }

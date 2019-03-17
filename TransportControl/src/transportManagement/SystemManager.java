@@ -2,6 +2,8 @@ package transportManagement;
 
 import java.util.*;
 
+import transportManagement.supportClasses.*;
+
 public class SystemManager
 {	
 	private HashMap<String, HashMap<String, City>> cities; private HashMap<String, HashMap<String, TransportLine>> lines;
@@ -32,9 +34,9 @@ public class SystemManager
 		if( line != null ) lines.get(type).put(name, line);
 	}
 	
-	public void createTransit( String type, String lineName, String orig, int year, int month, int day, String id, String... dest ) {
+	public void createTransit( String type, String lineName, String orig, int dYear, int dMonth, int dDay, int aYear, int aMonth, int aDay, String id, String... dest ) {
 		Transition transit = new NullTransition();
-		transit = TransportFactory.createTransition(type, transit.new DataClass(lineName, orig, year, month, day, id, lines.get(type), cities.get(type),  dest));
+		transit = TransportFactory.createTransition(type, transit.new DataClass(lineName, orig, new MyDate(dDay, dMonth, dYear), new MyDate(aDay, aMonth, aYear), id, lines.get(type), cities.get(type),  dest));
 		
 		if( transit.getClass().getSimpleName().startsWith("Null") ) lines.get(type).get(lineName).addTransit(transit);
 	}

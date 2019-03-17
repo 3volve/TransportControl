@@ -2,6 +2,9 @@ package transportManagement;
 
 import java.util.HashMap;
 
+import transportManagement.supportClasses.MyDate;
+import transportManagement.supportClasses.SystemTester;
+
 class AirFactory implements TransportFactory {
 
 	static TransportLine createTransportLine( String name, HashMap<String, TransportLine> airlines ) {
@@ -15,16 +18,16 @@ class AirFactory implements TransportFactory {
 	}
 
 	static Transition createTransition( Transition.DataClass data ) {
-		String BaseErrorStr = "Flight " + data.ID + " for airline " + data.lName + " was unable to be created: "; 	int curYear = 2019, curMonth = 3, maxMonth = 12, maxDays = 31;
-		Transition flight = new Flight(data.orig, data.year, data.month, data.day, data.ID, data.dest[0]);
-		boolean[] conditions = new boolean[] { data.orig.equals(data.dest), !data.lines.containsKey(data.lName),
-				!data.cities.containsKey(data.orig) || !data.cities.containsKey(data.dest), data.year < curYear || (data.year < curYear && data.month < curMonth),
-				maxMonth < data.month || maxDays < data.day, data.lines.get(data.lName).isDuplicate(flight) };
+		String BaseErrorStr = "Flight " + data.ID + " for airline " + data.lName + " was unable to be created: "; int maxMonth = 12, maxDays = 31;
+		Transition flight = new Flight(data.orig, data.departDate, data.ID, data.dest.get(0));
+		boolean[] conditions = new boolean[] { data.orig.equals(data.dest.get(0)), !data.lines.containsKey(data.lName),
+				!data.cities.containsKey(data.orig) || !data.cities.containsKey(data.dest.get(0)), data.departDate.compareTo(new MyDate(3, 17, 2019)) < 0,
+				maxMonth < data.departDate.getMonth() || maxDays < data.departDate.getDay(), data.lines.get(data.lName).isDuplicate(flight) };
 		
 		if( SystemTester.systemTest(BaseErrorStr, conditions, "same airport at origin and destination.", "no airline named " + data.lName + ".",
 														   "invalid airport " + data.orig + " and/or " + data.dest + ".", "cannot create flight in the past.",
 														   "invalid days and/or months", "duplicate error.") )
-			return new Flight( data.orig, data.year, data.month, data.day, data.ID, data.dest[0] );
+			return flight;
 		
 		return new NullTransition();
 	}

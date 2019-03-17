@@ -2,33 +2,30 @@ package transportManagement;
 
 import java.util.HashMap;
 
+import transportManagement.supportClasses.MyDate;
+
 class Flight extends Transition
 {
-	private String orig, dest, ID;
-	private int year, month, day;
-	private HashMap<SeatClass, TransportSection> flightSections;
+	private String dest;
 	
-	Flight( String or, int ye, int mo, int da, String id, String de ) {
-		orig = or; dest = de; ID = id;
-		year = ye; month = mo; day = da; 
-		flightSections = new HashMap<SeatClass, TransportSection>();
-	}
+	Flight( String orig, MyDate depart, String id, String de )
+	{ super(orig, id, depart, new HashMap<SeatClass, TransportSection>()); }
 	
-	void addSection( TransportSection section ) { flightSections.put(section.getSeatClass(), section); }
+	void addSection( TransportSection section ) { sections.put(section.getSeatClass(), section); }
 
 	boolean hasCities( String o, String... d ) {
-		if( o.equals(orig) && d[0].equals(dest) ) return true;
+		if( o.equals(origin) && d[0].equals(dest) ) return true;
 		
 		return false;
 	}
 	
 	@Override
 	public String toString() {
-		return "Flight " + ID + " traveling from " + orig + " to " + dest + " on " + day + "/" + month + "/" + year +
-			   " with Flight Sections:\n\t\t\t" + flightSections.values().toString();
+		return "Flight " + ID + " traveling from " + origin + " to " + dest + " on " + departDate.toString() +
+			   " with Flight Sections:\n\t\t\t" + sections.values().toString();
 	}
 	
-	HashMap<SeatClass, TransportSection> getSections() { return flightSections; }
+	HashMap<SeatClass, TransportSection> getSections() { return sections; }
 
 	public String getID() { return ID; }
 }

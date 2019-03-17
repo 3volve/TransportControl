@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class NullTransition extends Transition {
 
-	public NullTransition() {}
+	public NullTransition() { super("", "", null, null); }
 
 	@Override
 	boolean hasCities(String orig, String... dest) { return false; }
