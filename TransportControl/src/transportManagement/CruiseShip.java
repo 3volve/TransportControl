@@ -20,4 +20,7 @@ public class CruiseShip {
 		trips.add(newBooking);
 		return true;
 	}
+	
+	@Override
+	public String toString() { return name; }
 }

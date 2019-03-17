@@ -1,7 +1,5 @@
 package transportManagement;
 
-import java.util.HashMap;
-
 class AirSection extends TransportSection
 {
 	private SeatClass seatClass;

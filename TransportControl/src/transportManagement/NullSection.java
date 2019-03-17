@@ -1,6 +1,5 @@
 package transportManagement;
 
-import java.util.HashMap;
 
 class NullSection extends TransportSection
 {

@@ -1,7 +1,5 @@
 package transportManagement;
 
-import java.util.HashMap;
-
 class TrainFactory implements TransportFactory {
 
 	static TransportLine createTransportLine( String name ) {
