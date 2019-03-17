@@ -4,20 +4,26 @@ import java.util.HashMap;
 
 class TrainFactory implements TransportFactory {
 
-	static TransportLine createTransportLine(String name,  HashMap<String, TransportLine> trainlines) {
+	static TransportLine createTransportLine( String name ) {
+		int nameMinSize = 1, nameMaxSize = 5;
+		
+		if( name.length() < nameMinSize || nameMaxSize < name.length() )
+			System.out.println("Trainline " + name + " was unable to be created: incorrect trainline naming syntax.");
+		else return new Trainline(name);
+		
 		return null;
 	}
 
 	static Transition createTransition( Transition.DataClass data ) {
 		
 		
-		return null;
+		return new NullTransition();
 	}
 	
-	static AirSection createSection( AirSection.DataClass data ) {
+	static TransportSection createSection( TransportSection.DataClass data ) {
 		
 		
-		return null;
+		return new NullSection();
 	}
 
 }

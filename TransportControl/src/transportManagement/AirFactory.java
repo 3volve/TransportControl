@@ -1,32 +1,30 @@
 package transportManagement;
 
-import java.util.HashMap;
-
 import transportManagement.supportClasses.MyDate;
 import transportManagement.supportClasses.SystemTester;
 
 class AirFactory implements TransportFactory {
 
-	static TransportLine createTransportLine( String name, HashMap<String, TransportLine> airlines ) {
-		String errorStr = "Airline " + name + " was unable to be created: "; int nameMinSize = 1, nameMaxSize = 5;
-		boolean[] conditions = new boolean[] {airlines.containsKey(name), name.length() < nameMinSize || nameMaxSize < name.length()};
+	static TransportLine createTransportLine( String name ) {
+		int nameMinSize = 1, nameMaxSize = 5;
 		
-		if( SystemTester.systemTest(errorStr, conditions, "duplicate name.", "incorrect airlines naming syntax.") )
-			return new Airline(name);
+		if( name.length() < nameMinSize || nameMaxSize < name.length() )
+			System.out.println("Airline " + name + " was unable to be created: incorrect airline naming syntax.");
+		else return new Airline(name);
 		
 		return null;
 	}
 
 	static Transition createTransition( Transition.DataClass data ) {
-		String BaseErrorStr = "Flight " + data.ID + " for airline " + data.lName + " was unable to be created: "; int maxMonth = 12, maxDays = 31;
 		Transition flight = new Flight(data.orig, data.departDate, data.ID, data.dest.get(0));
-		boolean[] conditions = new boolean[] { data.orig.equals(data.dest.get(0)), !data.lines.containsKey(data.lName),
-				!data.cities.containsKey(data.orig) || !data.cities.containsKey(data.dest.get(0)), data.departDate.compareTo(new MyDate(3, 17, 2019)) < 0,
-				maxMonth < data.departDate.getMonth() || maxDays < data.departDate.getDay(), data.lines.get(data.lName).isDuplicate(flight) };
 		
-		if( SystemTester.systemTest(BaseErrorStr, conditions, "same airport at origin and destination.", "no airline named " + data.lName + ".",
-														   "invalid airport " + data.orig + " and/or " + data.dest + ".", "cannot create flight in the past.",
-														   "invalid days and/or months", "duplicate error.") )
+		String BaseErrorStr = "Flight " + data.ID + " was unable to be created: "; 
+		MyDate curDate = new MyDate(3, 17, 2019); int maxMonth = 12, maxDays = 31;
+		boolean[] conditions = new boolean[] { data.orig.equals(data.dest.get(0)), data.departDate.compareTo(curDate) < 0,
+				maxMonth < data.departDate.getMonth() || maxDays < data.departDate.getDay(), data.line.isDuplicate(flight) };
+		
+		if( SystemTester.systemTest(BaseErrorStr, conditions, "same airport at origin and destination.",  "cannot create flight in the past.",
+														   "invalid days and/or months.", "duplicate error.") )
 			return flight;
 		
 		return new NullTransition();

@@ -10,14 +10,14 @@ public class SystemManager
 	
 	public SystemManager() {
 		cities = new HashMap<String, HashMap<String, City>>();
-		cities.put("Airline", new HashMap<String, City>());
-		cities.put("Trainline", new HashMap<String, City>());
-		cities.put("Cruiseline", new HashMap<String, City>());
+		cities.put("Air", new HashMap<String, City>());
+		cities.put("Train", new HashMap<String, City>());
+		cities.put("Cruise", new HashMap<String, City>());
 		
 		lines = new HashMap<String, HashMap<String, TransportLine>>();
-		lines.put("Airports", new HashMap<String, TransportLine>());
-		lines.put("Trainstations", new HashMap<String, TransportLine>());
-		lines.put("Cruiseports", new HashMap<String, TransportLine>());
+		lines.put("Air", new HashMap<String, TransportLine>());
+		lines.put("Train", new HashMap<String, TransportLine>());
+		lines.put("Cruise", new HashMap<String, TransportLine>());
 	}
 	
 	public void initializeCity( String type, String name ) {	
@@ -29,16 +29,26 @@ public class SystemManager
 	}
 	
 	public void createTransportLine( String type, String name ) {
-		TransportLine line = TransportFactory.createTransportLine(type, name, lines.get(type));
+		if( lines.get(type).containsKey(name) ) System.out.println(type + "line " + name + " was unable to be created: duplicate name.");
 		
-		if( line != null ) lines.get(type).put(name, line);
+		else {
+			TransportLine line = TransportFactory.createTransportLine(type, name, lines.get(type));
+		
+			if( line != null ) lines.get(type).put(name, line);
+		}
 	}
 	
 	public void createTransit( String type, String lineName, String orig, int dYear, int dMonth, int dDay, int aYear, int aMonth, int aDay, String id, String... dest ) {
-		Transition transit = new NullTransition();
-		transit = TransportFactory.createTransition(type, transit.new DataClass(lineName, orig, new MyDate(dDay, dMonth, dYear), new MyDate(aDay, aMonth, aYear), id, lines.get(type), cities.get(type),  dest));
+		if( SystemTester.systemTest(type + "transit " + id + " was unable to be created: ",
+				new boolean[] {!lines.get(type).containsKey(lineName), !cities.get(type).containsKey(orig)},
+				"no " + type + "line under the name: " + lineName + ".", "no " + type + "port under the name: " + orig + ".") )
+		{
 		
-		if( transit.getClass().getSimpleName().startsWith("Null") ) lines.get(type).get(lineName).addTransit(transit);
+			Transition transit = new NullTransition();
+			transit = TransportFactory.createTransition(type, transit.new DataClass(lines.get(type).get(lineName), orig, new MyDate(dDay, dMonth, dYear), new MyDate(aDay, aMonth, aYear), id,  dest));
+		
+			if( !transit.getClass().getSimpleName().startsWith("Null") ) lines.get(type).get(lineName).addTransit(transit);
+		}
 	}
 	
 	public void createSection( String type, String line, String ID, int rows, int cols, SeatClass s ) {
@@ -79,7 +89,7 @@ public class SystemManager
 	}
 	
 	public void displaySystemDetails() {
-		String[] portType = new String[] {"Airports", "Cruiseports", "Trainstations"}, lineType = new String[] {"Airlines", "Cruiselines", "Trainlines"};
+		String[] portType = new String[] {"Airports", "Cruiseports", "Trainports"}, lineType = new String[] {"Airlines", "Cruiselines", "Trainlines"};
 		
 		for( int index = 0; index < portType.length; index++ ) {
 			System.out.println(portType[index] + ": " + cities.get(portType[index]).values().toString());

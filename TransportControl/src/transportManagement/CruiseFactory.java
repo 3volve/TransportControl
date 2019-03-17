@@ -1,21 +1,39 @@
 package transportManagement;
 
-import java.util.HashMap;
+import transportManagement.supportClasses.MyDate;
+import transportManagement.supportClasses.SystemTester;
 
 class CruiseFactory implements TransportFactory {
 
-	static TransportLine createTransportLine( String name,  HashMap<String, TransportLine> cruiselines ) {
-		return new Cruiseline(name);
+	static TransportLine createTransportLine( String name ) {
+		int nameMinSize = 1, nameMaxSize = 5;
+		
+		if( name.length() < nameMinSize || nameMaxSize < name.length() )
+			System.out.println("Cruiseline " + name + " was unable to be created: incorrect cruiseline naming syntax.");
+		else return new Cruiseline(name);
+		
+		return null;
 	}
 
 	static Transition createTransition( Transition.DataClass data ) {
-		return new CruiseTrip(data.orig, data.ID, data.departDate, data.arriveDate, data.dest);
+		Transition trip = new CruiseTrip(data.orig, data.ID, data.departDate, data.arriveDate, data.dest);
+		
+		String BaseErrorStr = "Trip " + data.ID + " was unable to be created: ";
+		MyDate curDate = new MyDate(3, 7, 2019); int maxMonth = 12, maxDays = 31;
+		boolean[] conditions = new boolean[] { data.departDate.dayDifference(data.arriveDate) > 21, data.departDate.compareTo(curDate) < 0,
+				maxMonth < data.departDate.getMonth() || maxDays < data.departDate.getDay(), data.line.isDuplicate(trip) };
+		
+		if( SystemTester.systemTest(BaseErrorStr, conditions, "trip cannot last longer than 21 days.", "cannot create trip in the past.",
+														   "invalid days and/or months", "duplicate error.") )
+			return trip;
+		
+		return new NullTransition();
 	}
 	
-	static CruiseSection createSection( AirSection.DataClass data ) {
+	static TransportSection createSection( TransportSection.DataClass data ) {
 		
 		
-		return null;
+		return new NullSection();
 	}
 
 }

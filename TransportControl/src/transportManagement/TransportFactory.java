@@ -8,11 +8,11 @@ public interface TransportFactory {
 		
 		switch( type )
 		{
-			case( "Air" ) : return AirFactory.createTransportLine(name, lines);
+			case( "Air" ) : return AirFactory.createTransportLine(name);
 			
-			case( "Train" ) : return TrainFactory.createTransportLine(name, lines);
+			case( "Train" ) : return TrainFactory.createTransportLine(name);
 			
-			case( "Cruise" ) : return CruiseFactory.createTransportLine(name, lines);
+			case( "Cruise" ) : return CruiseFactory.createTransportLine(name);
 		}
 		
 		return null;

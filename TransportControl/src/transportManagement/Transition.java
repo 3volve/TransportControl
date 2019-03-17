@@ -23,16 +23,14 @@ abstract class Transition {
 	HashMap<SeatClass, TransportSection> getSections() { return sections; }
 	
 	class DataClass {
-		final String lName, orig, ID;
+		final String orig, ID;
+		final TransportLine line;
 		final ArrayList<String> dest;
 		final MyDate departDate, arriveDate;
-		final HashMap<String, TransportLine> lines;
-		final HashMap<String, City> cities;
 		
-		DataClass( String n, String o, MyDate deD, MyDate arD, String id, HashMap<String, TransportLine> l, HashMap<String, City> c, String... de ) {
-			lName = n; orig = o; ID = id;
+		DataClass( TransportLine l, String o, MyDate deD, MyDate arD, String id, String... de ) {
+			line = l; orig = o; ID = id;
 			departDate = deD; arriveDate = arD;
-			lines = l; cities = c;
 			
 			dest = new ArrayList<String>();
 			for( String d : de ) dest.add(d);
