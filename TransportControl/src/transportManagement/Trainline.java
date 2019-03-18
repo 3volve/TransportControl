@@ -11,7 +11,7 @@ class Trainline extends TransportLine
 
 	@Override
 	boolean hasTransit(String orig, String... dest) {
-		for( Transition transit : transits.values() )
+		for( Transition transit : super.getTransits().values() )
 			if( transit.hasCities(orig, dest) ) return true;
 		
 		return false;

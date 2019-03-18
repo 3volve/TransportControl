@@ -1,11 +1,11 @@
 package transportManagement;
 
-import transportManagement.supportClasses.CabinClass;
+import transportManagement.supportClasses.TransportClass;
 
 public class CruiseSection extends TransportSection {
 
-	CabinClass getCabinClass() {
-		return null;
+	CruiseSection( TransportClass seatClass ) {
+		super(seatClass);
 	}
 	
 	@Override
@@ -16,11 +16,6 @@ public class CruiseSection extends TransportSection {
 	@Override
 	boolean isSeatAvailable(int row, char col) {
 		return false;
-	}
-
-	@Override
-	CabinClass getTransportClass() {
-		return null;
 	}
 
 	@Override

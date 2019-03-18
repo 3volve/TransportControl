@@ -8,17 +8,15 @@ import transportManagement.supportClasses.TransportClass;
 
 abstract class Transition {
 
-	protected String origin, ID;
-	protected MyDate departDate;
-	protected HashMap<TransportClass, TransportSection> sections;
+	final String origin, ID;
+	final MyDate departDate;
+	private HashMap<TransportClass, TransportSection> sections;
 	
 	protected Transition( String orig, String id, MyDate depart, HashMap<TransportClass,TransportSection> hashMap )
 	{ origin = orig; ID = id; departDate = depart; sections = hashMap; }
 	
 	abstract boolean hasCities( String orig, String... dest );
 	
-	String getID() { return ID; }
-
 	abstract void addSection(TransportSection section);
 
 	HashMap<TransportClass, TransportSection> getSections() { return sections; }

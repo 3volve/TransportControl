@@ -28,13 +28,13 @@ public class SystemManager
 			cities.get(type).put(name, new City(name));
 	}
 	
-	public void createTransportLine( String type, String... name ) {
-		if( lines.get(type).containsKey(name[0]) ) System.out.println(type + "line " + name[0] + " was unable to be created: duplicate name.");
+	public void createTransportLine( String type, String name, String... fleet ) {
+		if( lines.get(type).containsKey(name) ) System.out.println(type + "line " + name + " was unable to be created: duplicate name.");
 		
 		else {
-			TransportLine line = TransportFactory.createTransportLine(type, name);
+			TransportLine line = TransportFactory.createTransportLine(type, name, fleet);
 		
-			if( line != null ) lines.get(type).put(name[0], line);
+			if( line != null ) lines.get(type).put(name, line);
 		}
 	}
 	
@@ -43,7 +43,6 @@ public class SystemManager
 				new boolean[] {!lines.get(type).containsKey(lineName), !cities.get(type).containsKey(orig)},
 				"no " + type + "line under the name: " + lineName + ".", "no " + type + "port under the name: " + orig + ".") )
 		{
-		
 			Transition transit = new NullTransition();
 			transit = TransportFactory.createTransition(type, transit.new DataClass(lines.get(type).get(lineName), orig, depart, arrive, id,  dest));
 		
@@ -51,12 +50,16 @@ public class SystemManager
 		}
 	}
 	
-	public void createSection( String type, String line, String ID, int rows, int cols, SeatClass s ) {
-		TransportSection section = new NullSection();
-		section = TransportFactory.createSection(type, section.new DataClass(line, ID, rows, cols, s, lines.get(type)));
+	public void createSection( String type, String line, String ID, int rows, String layoutName, SeatClass s ) {
+		if( !lines.get(type).containsKey(line) )
+			System.out.println(type + "section " + ID + " was unable to be created: no " + type + "line under the name: " + line + ".");
+		else {
+			TransportSection section = new NullSection();
+			section = TransportFactory.createSection(type, section.new DataClass(ID, rows, layoutName, s, lines.get(type).get(line)));
 		
-		if( !section.getClass().getSimpleName().startsWith("Null") )
-			lines.get(type).get(line).getTransits().get(ID).addSection(section);
+			if( !section.getClass().getSimpleName().startsWith("Null") )
+				lines.get(type).get(line).getTransits().get(ID).addSection(section);
+		}
 	}
 	
 	public void findAvailableTransits( String type, String orig, String dest ) {

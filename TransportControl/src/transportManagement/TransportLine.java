@@ -4,13 +4,13 @@ import java.util.HashMap;
 
 abstract class TransportLine {
 
-	String name;
-	HashMap<String, Transition> transits;
+	final String name;
+	private HashMap<String, Transition> transits;
 	
 	TransportLine( String n ) { name = n; transits = new HashMap<String, Transition>(); }
 	
 	boolean addTransit( Transition transit ) {
-		return transits.putIfAbsent(transit.getID(), transit) == null;
+		return transits.putIfAbsent(transit.ID, transit) == null;
 	}
 
 	HashMap<String, Transition> getTransits() { return transits; }

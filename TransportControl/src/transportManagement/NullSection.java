@@ -4,6 +4,10 @@ import transportManagement.supportClasses.TransportClass;
 
 class NullSection extends TransportSection
 {
+	NullSection() {
+		super(null);
+	}
+
 	void bookSeat( int row, char col) {}
 	
 	boolean isSeatAvailable( int row, char col ) { return false; }

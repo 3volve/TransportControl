@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import transportManagement.supportClasses.MyDate;
-import transportManagement.supportClasses.CabinClass;
+import transportManagement.supportClasses.TransportClass;
 
 public class CruiseShip {
 	private HashSet<MyDate[]> trips;
-	private HashMap<CabinClass, CruiseSection> cabins;
+	private HashMap<TransportClass, TransportSection> cabins;
 	private String name;
 	
 	CruiseShip( String n ) { name = n; }
@@ -24,14 +24,26 @@ public class CruiseShip {
 		return true;
 	}
 	
-	boolean setCabins( CruiseSection... cabin ) {
+	boolean setCabins( TransportSection[] sections ) {
 		boolean result = true;
 		
-		for( CruiseSection section : cabin )
-			if( cabins.containsKey(section.getTransportClass()) )
+		for( TransportSection section : sections ) {
+			if( !setCabin(section) )
 				result = false;
-		return result; 
+		}
+		
+		return result;
 	}
+	
+	boolean setCabin( TransportSection section ) {
+		if( cabins.containsKey(section.getTransportClass()) )
+			return false;
+		
+		cabins.put(section.getTransportClass(), section);
+		return true;
+	}
+	
+	HashMap<TransportClass, TransportSection> getLayout() { return cabins; }
 	
 	@Override
 	public String toString() { return name; }

@@ -31,14 +31,14 @@ class AirFactory implements TransportFactory {
 	}
 	
 	static TransportSection createSection( TransportSection.DataClass data ) {
-		String BaseErrorStr = "FlightSection " + data.seatClass + " class, of flight " + data.flID + " for airline " + data.airline + " was unable to be created: ";
-		int maxRows = 100, maxCols = 10;
+		String BaseErrorStr = "FlightSection " + data.seatClass + " class, of flight " + data.transID + " for airline " + data.line.getName() + " was unable to be created: ";
+		int maxRows = 100;
 		
-		boolean[] conditions = new boolean[] { data.rows <= 0 || data.cols <= 0 || maxRows < data.rows || maxCols < data.cols, !data.lines.containsKey(data.airline), false };
-		if( !conditions[1] ) conditions[2] = data.lines.get(data.airline).getTransits().get(data.flID).getSections().containsKey(data.seatClass);
+		boolean[] conditions = new boolean[] { data.rows <= 0 || maxRows < data.rows, !data.layout.equals("small") || !data.layout.equals("medium") || !data.layout.equals("wide"),
+											  data.line.getTransits().get(data.transID).getSections().containsKey(data.seatClass) };
 		
-		if( SystemTester.systemTest(BaseErrorStr, conditions, "incorrect # of rows.", " no airline named " + data.airline + ".", "duplicate SeatClass."))
-			return new AirSection(data.seatClass, data.rows, data.cols);
+		if( SystemTester.systemTest(BaseErrorStr, conditions, "incorrect # of rows.", "incorrect given section layout.", "duplicate SeatClass."))
+			return new AirSection(data.seatClass, data.rows, data.layout);
 			
 		return new NullSection();
 	}

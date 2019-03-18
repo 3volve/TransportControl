@@ -1,31 +1,33 @@
 package transportManagement;
 
-import java.util.HashMap;
-
 import transportManagement.supportClasses.TransportClass;
 
 abstract class TransportSection
 {
-	protected TransportClass seatingClass;
+	final TransportClass seatingClass;
+	
+	TransportSection( TransportClass transClass ) {
+		seatingClass = transClass;
+	}
 	
 	abstract void bookSeat( int row, char col);
 	
 	abstract boolean isSeatAvailable( int row, char col );
 	
-	abstract TransportClass getTransportClass();
+	TransportClass getTransportClass() { return seatingClass; }
 	
 	public abstract String toString();
 	
 	class DataClass
 	{
-		String airline, flID;
-		int rows, cols;
-		TransportClass seatClass;
-		HashMap<String, TransportLine> lines;
+		final String transID, layout;
+		final int rows;
+		final TransportClass seatClass;
+		final TransportLine line;
 		
-		DataClass(String air, String flid, int r, int c, TransportClass s, HashMap<String, TransportLine> l ) {
-			airline = air; flID = flid;
-			rows = r; cols = c;
+		DataClass(String transid, int r, String lay, TransportClass s, TransportLine l ) {
+			line = l; transID = transid;
+			rows = r; layout = lay;
 			seatClass = s;
 		}
 	}

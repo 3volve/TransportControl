@@ -36,6 +36,16 @@ public class MyDate implements Comparable<MyDate> {
 		return false;
 	}
 	
+	public static boolean isValid( MyDate valid ) {
+		int maxMonths = 12, maxDays = 31;
+		int validDay = valid.getDay(), validMonth = valid.getMonth();
+		
+		if( validDay <= 0 || validMonth <= 0 ) return false;
+		if( validDay > maxDays || validMonth > maxMonths ) return false;
+		
+		return true;
+	}
+	
 	@Override
 	public String toString() { return day + "/" + month + "/" + year; }
 	

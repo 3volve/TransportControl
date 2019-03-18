@@ -1,4 +1,4 @@
 package transportManagement.supportClasses;
 
 public enum CabinClass implements TransportClass
-{ family, couples; }
+{ family, deluxeFamily, couples, deluxeCouples; }

@@ -2,15 +2,15 @@ package transportManagement;
 
 public interface TransportFactory {
 
-	static TransportLine createTransportLine( String type, String... name ) {
+	static TransportLine createTransportLine( String type, String name, String... fleet) {
 		
 		switch( type )
 		{
-			case( "Air" ) : return AirFactory.createTransportLine(name[0]);
+			case( "Air" ) : return AirFactory.createTransportLine(name);
 			
-			case( "Train" ) : return TrainFactory.createTransportLine(name[0]);
+			case( "Train" ) : return TrainFactory.createTransportLine(name);
 			
-			case( "Cruise" ) : return CruiseFactory.createTransportLine(name);
+			case( "Cruise" ) : return CruiseFactory.createTransportLine(name, fleet);
 		}
 		
 		return null;
@@ -30,7 +30,7 @@ public interface TransportFactory {
 		return new NullTransition();
 	}
 	
-	static TransportSection createSection( String type, AirSection.DataClass data ) {
+	static TransportSection createSection( String type, TransportSection.DataClass data ) {
 
 		switch( type )
 		{

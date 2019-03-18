@@ -6,7 +6,7 @@ class Airline extends TransportLine
 	
 	@Override
 	boolean hasTransit( String orig, String... dest ) {
-		for( Transition fly : transits.values() )
+		for( Transition fly : super.getTransits().values() )
 			if( fly.hasCities(orig, dest[0]) ) return true;
 		
 		return false;
@@ -14,7 +14,7 @@ class Airline extends TransportLine
 	
 	@Override
 	public String toString() {
-		if( !transits.isEmpty() ) return name + " with flights: " + transits.values();
+		if( !super.getTransits().isEmpty() ) return name + " with flights: " + super.getTransits().values();
 		
 		return name;
 	}
