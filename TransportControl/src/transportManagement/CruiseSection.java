@@ -1,29 +1,30 @@
 package transportManagement;
 
+import transportManagement.supportClasses.CabinClass;
+
 public class CruiseSection extends TransportSection {
 
+	CabinClass getCabinClass() {
+		return null;
+	}
+	
 	@Override
 	void bookSeat(int row, char col) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	boolean isSeatAvailable(int row, char col) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	SeatClass getSeatClass() {
-		// TODO Auto-generated method stub
+	CabinClass getTransportClass() {
 		return null;
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

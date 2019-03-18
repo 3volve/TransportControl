@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import transportManagement.supportClasses.MyDate;
+import transportManagement.supportClasses.TransportClass;
 
 abstract class Transition {
 
 	protected String origin, ID;
 	protected MyDate departDate;
-	protected HashMap<SeatClass, TransportSection> sections;
+	protected HashMap<TransportClass, TransportSection> sections;
 	
-	protected Transition( String orig, String id, MyDate depart, HashMap<SeatClass, TransportSection> sect )
-	{ origin = orig; ID = id; departDate = depart; sections = sect; }
+	protected Transition( String orig, String id, MyDate depart, HashMap<TransportClass,TransportSection> hashMap )
+	{ origin = orig; ID = id; departDate = depart; sections = hashMap; }
 	
 	abstract boolean hasCities( String orig, String... dest );
 	
@@ -20,7 +21,7 @@ abstract class Transition {
 
 	abstract void addSection(TransportSection section);
 
-	HashMap<SeatClass, TransportSection> getSections() { return sections; }
+	HashMap<TransportClass, TransportSection> getSections() { return sections; }
 	
 	class DataClass {
 		final String orig, ID;

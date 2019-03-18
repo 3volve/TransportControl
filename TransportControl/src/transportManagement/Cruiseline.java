@@ -9,9 +9,10 @@ class Cruiseline extends TransportLine {
 
 	Cruiseline(String n) { super(n); }
 
-	boolean addShip( String name ) {
+	boolean addShip( String name, TransportSection... sections ) {
 		if( !ships.containsKey(name) ) {
 			ships.put(name, new CruiseShip(name));
+			ships.get(name).setCabins();
 			return true;
 		}
 		

@@ -1,5 +1,6 @@
 package transportManagement;
 
+import transportManagement.supportClasses.TransportClass;
 
 class NullSection extends TransportSection
 {
@@ -7,7 +8,7 @@ class NullSection extends TransportSection
 	
 	boolean isSeatAvailable( int row, char col ) { return false; }
 	
-	SeatClass getSeatClass() { return null; }
+	TransportClass getTransportClass() { return null; }
 	
 	public String toString() { return "This is a Null Section"; }
 }

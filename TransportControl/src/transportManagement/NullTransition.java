@@ -2,6 +2,8 @@ package transportManagement;
 
 import java.util.HashMap;
 
+import transportManagement.supportClasses.TransportClass;
+
 public class NullTransition extends Transition {
 
 	public NullTransition() { super("", "", null, null); }
@@ -16,6 +18,6 @@ public class NullTransition extends Transition {
 	void addSection(TransportSection section) {}
 
 	@Override
-	HashMap<SeatClass, TransportSection> getSections() { return new HashMap<SeatClass, TransportSection>(); }
+	HashMap<TransportClass, TransportSection> getSections() { return new HashMap<TransportClass, TransportSection>(); }
 
 }

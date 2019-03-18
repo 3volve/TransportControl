@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import transportManagement.supportClasses.MyDate;
+import transportManagement.supportClasses.TransportClass;
 
 public class CruiseTrip extends Transition 
 {
@@ -11,7 +12,7 @@ public class CruiseTrip extends Transition
 	private ArrayList<String> dest;
 	
 	CruiseTrip( String orig, String id, MyDate depart, MyDate arrive, ArrayList<String> de ) {
-		super(orig, id, depart, new HashMap<SeatClass, TransportSection>());
+		super(orig, id, depart, new HashMap<TransportClass, TransportSection>());
 		arriveDate = arrive;
 		dest = de;
 	}

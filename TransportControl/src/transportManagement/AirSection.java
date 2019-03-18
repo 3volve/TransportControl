@@ -1,12 +1,14 @@
 package transportManagement;
 
+import transportManagement.supportClasses.SeatClass;
+import transportManagement.supportClasses.TransportClass;
+
 class AirSection extends TransportSection
 {
-	private SeatClass seatClass;
 	private Seat[][] seats; //A flight section can contain at most 100 rows of seats and at most 10 columns of seats.
 	
-	AirSection( SeatClass sC, int r, int c ) {
-		seatClass = sC;
+	AirSection( TransportClass seatClass2, int r, int c ) {
+		seatingClass = seatClass2;
 		
 		for( int row = 0; row < r; row++ ) {
 			seats = new Seat[r][c];
@@ -24,9 +26,9 @@ class AirSection extends TransportSection
 		return seats[row][col - 65].isAvailable();
 	}
 	
-	SeatClass getSeatClass() { return seatClass; }
+	TransportClass getTransportClass() { return seatingClass; }
 	
 	public String toString() {
-		return seatClass + " class section containing " + (seats[0].length * seats.length) + " seats";
+		return seatingClass + " class section containing " + (seats[0].length * seats.length) + " seats";
 	}
 }

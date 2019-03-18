@@ -1,11 +1,14 @@
 package transportManagement;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 import transportManagement.supportClasses.MyDate;
+import transportManagement.supportClasses.CabinClass;
 
 public class CruiseShip {
 	private HashSet<MyDate[]> trips;
+	private HashMap<CabinClass, CruiseSection> cabins;
 	private String name;
 	
 	CruiseShip( String n ) { name = n; }
@@ -19,6 +22,15 @@ public class CruiseShip {
 		MyDate[] newBooking = new MyDate[] {depart, arrive};
 		trips.add(newBooking);
 		return true;
+	}
+	
+	boolean setCabins( CruiseSection... cabin ) {
+		boolean result = true;
+		
+		for( CruiseSection section : cabin )
+			if( cabins.containsKey(section.getTransportClass()) )
+				result = false;
+		return result; 
 	}
 	
 	@Override
