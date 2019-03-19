@@ -1,19 +1,17 @@
 package transportManagement;
 
-class Seat
+class Seat extends TransportSeating
 {
 	private boolean isWindow;
 	private boolean isAisle;
-	private boolean booked;
 	
-	Seat( boolean window, boolean aisle )
-	{ isWindow = window; isAisle = aisle; booked = false; }
-	
-	void bookSeat() { booked = true; }
+	Seat( int row, char col, boolean window, boolean aisle )
+	{ super(row, col); isWindow = window; isAisle = aisle; }
 
 	boolean isWindowSeat() { return isWindow; }
 	
 	boolean isAisleSeat() { return isAisle; }
-
-	boolean isAvailable() { return booked; }
+	
+	@Override
+	public String toString() { return "Seat " + number + letter; }
 }

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import transportManagement.supportClasses.MyDate;
 import transportManagement.supportClasses.TransportClass;
 
-abstract class Transition {
+public abstract class Transition {
 
 	final String origin, ID;
 	final MyDate departDate;
@@ -15,9 +15,11 @@ abstract class Transition {
 	protected Transition( String orig, String id, MyDate depart, HashMap<TransportClass,TransportSection> hashMap )
 	{ origin = orig; ID = id; departDate = depart; sections = hashMap; }
 	
-	abstract boolean hasCities( String orig, String... dest );
+	protected abstract boolean hasCities( String orig, String... dest );
 	
-	abstract void addSection(TransportSection section);
+	protected void addSection(TransportSection section) {
+		sections.put(section.getTransportClass(), section);
+	}
 
 	HashMap<TransportClass, TransportSection> getSections() { return sections; }
 	

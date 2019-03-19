@@ -1,6 +1,8 @@
 package transportManagement;
 
 import transportManagement.supportClasses.MyDate;
+import transportManagement.supportClasses.NullSection;
+import transportManagement.supportClasses.NullTransition;
 import transportManagement.supportClasses.SystemTester;
 
 class AirFactory implements TransportFactory {
@@ -31,14 +33,14 @@ class AirFactory implements TransportFactory {
 	}
 	
 	static TransportSection createSection( TransportSection.DataClass data ) {
-		String BaseErrorStr = "FlightSection " + data.seatClass + " class, of flight " + data.transID + " for airline " + data.line.getName() + " was unable to be created: ";
+		String BaseErrorStr = "FlightSection " + data.seatClass + " class, of flight " + data.transID + " for airline " + data.line.name + " was unable to be created: ";
 		int maxRows = 100;
 		
-		boolean[] conditions = new boolean[] { data.rows <= 0 || maxRows < data.rows, !data.layout.equals("small") || !data.layout.equals("medium") || !data.layout.equals("wide"),
+		boolean[] conditions = new boolean[] { data.number <= 0 || maxRows < data.number, !data.layout.equals("small") || !data.layout.equals("medium") || !data.layout.equals("wide"),
 											  data.line.getTransits().get(data.transID).getSections().containsKey(data.seatClass) };
 		
 		if( SystemTester.systemTest(BaseErrorStr, conditions, "incorrect # of rows.", "incorrect given section layout.", "duplicate SeatClass."))
-			return new AirSection(data.seatClass, data.rows, data.layout);
+			return new AirSection(data.seatClass, data.number, data.layout);
 			
 		return new NullSection();
 	}

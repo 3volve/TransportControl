@@ -2,17 +2,17 @@ package transportManagement;
 
 import transportManagement.supportClasses.TransportClass;
 
-abstract class TransportSection
+public abstract class TransportSection
 {
 	final TransportClass seatingClass;
 	
-	TransportSection( TransportClass transClass ) {
+	protected TransportSection( TransportClass transClass ) {
 		seatingClass = transClass;
 	}
 	
-	abstract void bookSeat( int row, char col);
+	protected abstract void bookSeat( int row, char col);
 	
-	abstract boolean isSeatAvailable( int row, char col );
+	protected abstract boolean isSeatAvailable( int row, char col );
 	
 	TransportClass getTransportClass() { return seatingClass; }
 	
@@ -21,13 +21,13 @@ abstract class TransportSection
 	class DataClass
 	{
 		final String transID, layout;
-		final int rows;
+		final int number;
 		final TransportClass seatClass;
 		final TransportLine line;
 		
-		DataClass(String transid, int r, String lay, TransportClass s, TransportLine l ) {
+		DataClass(String transid, int n, String lay, TransportClass s, TransportLine l ) {
 			line = l; transID = transid;
-			rows = r; layout = lay;
+			number = n; layout = lay;
 			seatClass = s;
 		}
 	}

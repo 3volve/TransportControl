@@ -1,6 +1,8 @@
 package transportManagement;
 
 import transportManagement.supportClasses.MyDate;
+import transportManagement.supportClasses.NullSection;
+import transportManagement.supportClasses.NullTransition;
 import transportManagement.supportClasses.SystemTester;
 
 class CruiseFactory implements TransportFactory {
@@ -63,7 +65,7 @@ class CruiseFactory implements TransportFactory {
 	static TransportSection createSection( TransportSection.DataClass data ) {
 		Cruiseline cruiseline = (Cruiseline)data.line;
 		CruiseShip ship = cruiseline.getShips().get(data.transID);
-		TransportSection cabin = new CruiseSection(data.seatClass);
+		TransportSection cabin = new CruiseSection(data.number, data.layout, data.seatClass);
 		
 		String baseErrorStr = "Cabin " + data.seatClass + " was unable to be created: ";
 		boolean[] conditions = new boolean[] { ship == null, !ship.setCabin(cabin) };

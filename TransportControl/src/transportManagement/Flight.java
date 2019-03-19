@@ -12,9 +12,9 @@ class Flight extends Transition
 	Flight( String orig, MyDate depart, String id, String de )
 	{ super(orig, id, depart, new HashMap<TransportClass, TransportSection>()); }
 	
-	void addSection( TransportSection section ) { super.getSections().put(section.getTransportClass(), section); }
+	protected void addSection( TransportSection section ) { super.getSections().put(section.getTransportClass(), section); }
 
-	boolean hasCities( String o, String... d ) {
+	protected boolean hasCities( String o, String... d ) {
 		if( o.equals(origin) && d[0].equals(dest) ) return true;
 		
 		return false;

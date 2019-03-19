@@ -15,7 +15,7 @@ public class CruiseTrip extends Transition
 		dest = de;
 	}
 	
-	boolean hasCities( String orig, String... testDest ) {
+	protected boolean hasCities( String orig, String... testDest ) {
 		if( !orig.equals(origin) ) return false;
 		
 		for( String testCity : testDest )
@@ -26,9 +26,4 @@ public class CruiseTrip extends Transition
 	}
 	
 	MyDate[] getTripDates() { return new MyDate[] {departDate, arriveDate}; }
-	
-	@Override
-	void addSection( TransportSection section ) {
-
-	}
 }

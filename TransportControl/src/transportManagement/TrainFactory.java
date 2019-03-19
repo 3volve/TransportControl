@@ -1,5 +1,8 @@
 package transportManagement;
 
+import transportManagement.supportClasses.NullSection;
+import transportManagement.supportClasses.NullTransition;
+
 class TrainFactory implements TransportFactory {
 
 	static TransportLine createTransportLine( String name ) {

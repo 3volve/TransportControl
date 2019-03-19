@@ -4,7 +4,7 @@ import transportManagement.supportClasses.TransportClass;
 
 class AirSection extends TransportSection
 {
-	private Seat[][] seats; //A flight section can contain at most 100 rows of seats and at most 10 columns of seats.
+	private TransportSeating[][] seats; //A flight section can contain at most 100 rows of seats and at most 10 columns of seats.
 	
 	AirSection( TransportClass seatClass, int r, String layout ) {
 		super(seatClass);
@@ -14,21 +14,23 @@ class AirSection extends TransportSection
 			seats = new Seat[r][maxCol];
 			
 			for( int col = 0; col < maxCol; col++ ) 
-				seats[row][col] = new Seat(layoutWindowSeat(col, maxCol), layoutAisleSeat(layout, col));
+				seats[row][col] = new Seat(row, (char)(col + 61), layoutWindowSeat(col, maxCol), layoutAisleSeat(layout, col));
 		}
 	}
 	
-	void bookSeat( int row, char col) {
+	protected void bookSeat( int row, char col) {
 		seats[row][col - 65].bookSeat();
 	}
 	
-	boolean isSeatAvailable( int row, char col ) {
+	protected boolean isSeatAvailable( int row, char col ) {
 		return seats[row][col - 65].isAvailable();
 	}
 	
+	@Override
 	public String toString() {
 		return seatingClass + " class section containing " + (seats[0].length * seats.length) + " seats";
 	}
+	
 	
 	int layoutColumns( String layout ) {
 		int columns = 3;
