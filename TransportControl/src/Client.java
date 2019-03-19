@@ -1,4 +1,5 @@
 import transportManagement.SystemManager;
+import transportManagement.supportClasses.SystemBuilder;
 import transportManagement.supportClasses.MyDate;
 
 public class Client
@@ -6,6 +7,12 @@ public class Client
 	public static void main(String[] args) {
 		SystemManager systems = new SystemManager();
 		
+		SystemBuilder systemsBuilder = new SystemBuilder("C:\\Users\\evolv\\git\\TransportControl\\TransportControl\\src\\Transport_Saved_Data.txt");
+		systems = systemsBuilder.getSystemManager();
+		
+		systems.displaySystemDetails("Air");
+		
+		/*
 		systems.createPort("Air", "JON");
 		systems.createPort("Air", "DEN");
 		systems.createPort("Cruise", "JON");
@@ -23,5 +30,6 @@ public class Client
 		systems.createTransit("Air", "JONNY", "JON", new MyDate(3, 20, 2020), null, "Jon-ded", "DEN");
 		systems.createTransit("Cruise", "Cradil", "JON", new MyDate(3, 20, 2019), new MyDate(3, 29, 2019), "PartyBoat", "DEN", "BOB", "EVO");
 		systems.createTransit("Cruise", "Cradil", "JON", new MyDate(4, 20, 2019), new MyDate(5, 20, 2019), "PartyBoat", "DEN", "BOB", "EVO");
+		*/
 	}
 }

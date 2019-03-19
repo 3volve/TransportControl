@@ -1,11 +1,28 @@
 package transportManagement.supportClasses;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 public class MyDate implements Comparable<MyDate> {
 
-	private final int day, month, year;
+	private final int minute, hour, day, month, year;
+	public final MyDate CUR_DATE;
 	
-	public MyDate( int m, int d, int y ) { month = m; day = d; year = y; }
-	
+	public MyDate( int mi, int hr, int mo, int d, int y ) {
+		minute = mi; hour = hr; month = mo; day = d; year = y;
+		Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+		
+		CUR_DATE = new MyDate(
+			calendar.get(Calendar.MINUTE),
+			calendar.get(Calendar.HOUR_OF_DAY),
+			calendar.get(Calendar.DAY_OF_MONTH),
+			calendar.get(Calendar.MONTH) + 1,
+			calendar.get(Calendar.YEAR)
+		);
+	}
+
+	public int getMinute() { return minute; }
+	public int getHour() { return hour; }
 	public int getDay() { return day; }
 	public int getMonth() { return month; }
 	public int getYear() { return year; }
@@ -36,15 +53,16 @@ public class MyDate implements Comparable<MyDate> {
 		return false;
 	}
 	
-	public static boolean isValid( MyDate valid ) {
-		int maxMonths = 12, maxDays = 31;
-		int validDay = valid.getDay(), validMonth = valid.getMonth();
+	public boolean isValid() {
+		int maxMonths = 12, maxDays = 31, maxHours = 24, maxMinutes = 59;
 		
-		if( validDay <= 0 || validMonth <= 0 ) return false;
-		if( validDay > maxDays || validMonth > maxMonths ) return false;
+		if( day <= 0 || month <= 0 || hour < 0 || minute < 0 ) return false;
+		if( day > maxDays || month > maxMonths || hour > maxHours || minute > maxMinutes ) return false;
 		
 		return true;
 	}
+	
+	public int compareToPresent() { return this.compareTo(CUR_DATE); }
 	
 	@Override
 	public String toString() { return day + "/" + month + "/" + year; }
@@ -55,8 +73,12 @@ public class MyDate implements Comparable<MyDate> {
 			return this.year - that.year;
 		else if( this.month != that.month )
 			return this.month - that.month;
-		else
+		else if( this.day != that.day )
 			return this.day - that.day;
+		else if( this.hour != that.hour )
+			return this.hour - that.hour;
+		else
+			return this.minute - that.minute;
 	}
 
 }

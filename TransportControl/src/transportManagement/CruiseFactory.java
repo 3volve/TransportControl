@@ -1,6 +1,5 @@
 package transportManagement;
 
-import transportManagement.supportClasses.MyDate;
 import transportManagement.supportClasses.NullSection;
 import transportManagement.supportClasses.NullTransition;
 import transportManagement.supportClasses.SystemTester;
@@ -38,23 +37,22 @@ class CruiseFactory implements TransportFactory {
 			}
 		}
 		
-		MyDate curDate = new MyDate(3, 18, 2019); //MyDate is (Month, Day, Year) and yeah probably better ways of doing this if I don't get around to implementing anything better
 		String baseErrorStr = "Trip " + data.ID + " was unable to be created: ";
 		boolean[] conditions = new boolean[] {
-				data.departDate.dayDifference(data.arriveDate) > 21,						//boolean #1
-				data.departDate.compareTo(curDate) < 0 && data.departDate.compareTo(data.arriveDate) > 0,	//2
-				MyDate.isValid(data.departDate) || MyDate.isValid(data.arriveDate),			//3
-				data.line.isDuplicate(trip),												//4
-				!hasBookedShip																//5
+				data.departDate.dayDifference(data.arriveDate) > 21,	
+				data.departDate.compareToPresent() < 0 && data.departDate.compareTo(data.arriveDate) > 0,
+				data.departDate.isValid() || data.arriveDate.isValid(),	
+				data.line.isDuplicate(trip),				
+				!hasBookedShip	
 				};
 		
 		if( SystemTester.systemTest (
 				baseErrorStr, conditions,					
-				"trip cannot last longer than 21 days.",					//1
-				"cannot create trip in and/or to the past.",					//2
-				"invalid days and/or months",								//3
-				"duplicate error.",											//4
-				"no available ship from cruiseline " + data.line.name + " between set dates.")	//5
+				"trip cannot last longer than 21 days.",	
+				"cannot create trip in and/or to the past.",		
+				"invalid days and/or months",			
+				"duplicate error.",		
+				"no available ship from cruiseline " + data.line.name + " between set dates.")
 				)
 			return trip;
 		

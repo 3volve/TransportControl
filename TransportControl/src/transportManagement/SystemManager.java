@@ -24,7 +24,7 @@ public class SystemManager
 		String BaseErrorStr = type + " named " + name + " was unable to be initialized: "; int nameSize = 3;
 		boolean[] conditions = new boolean[] {cities.get(type).containsKey(name), name.length() != nameSize};
 		
-		if( SystemTester.systemTest(BaseErrorStr, conditions,	"duplicate name.", "incorrect airport naming syntax." ) )
+		if( SystemTester.systemTest(BaseErrorStr, conditions, "duplicate name.", "incorrect airport naming syntax." ) )
 			cities.get(type).put(name, new City(name));
 	}
 	
@@ -91,15 +91,27 @@ public class SystemManager
 			lines.get(type).get(line).getTransits().get(transit).getSections().get(s).bookSeat(row, col);
 	}
 	
-	public void displaySystemDetails() {
-		String[] portType = new String[] {"Airports", "Cruiseports", "Trainports"}, lineType = new String[] {"Airlines", "Cruiselines", "Trainlines"};
+	public void displaySystemDetails( String type ) {
+		if( cities.get(type) != null  || cities.get(type).isEmpty() )
+			System.out.println(type + "ports: " + cities.get(type).values().toString());
+		else System.out.println("No " + type + "ports have been initialized yet.");
 		
-		for( int index = 0; index < portType.length; index++ ) {
-			System.out.println(portType[index] + ": " + cities.get(portType[index]).values().toString());
-			System.out.println("\n" + lineType[index] + ": ");
+		if( lines.get(type) != null  || lines.get(type).isEmpty() ) {
+			System.out.println("\n" + type + "lines: ");
 		
-			for( TransportLine line : lines.get(lineType[index]).values() )
-			System.out.println(line.toString());
+			for( TransportLine line : lines.get(type).values() )
+					System.out.println(line.toString());
+		}
+		else System.out.println("No " + type + "lines have been initialized yet.");
+	}
+	
+	public void displayAllSystemDetails() {
+		String[] type = new String[] {"Air", "Cruise", "Train"};
+		
+		for( int index = 0; index < type.length; index++ ) {
+			if( index != 0 ) System.out.println();
+			
+			displaySystemDetails(type[index]);
 		}
 	}
 }

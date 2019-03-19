@@ -1,6 +1,5 @@
 package transportManagement;
 
-import transportManagement.supportClasses.MyDate;
 import transportManagement.supportClasses.NullSection;
 import transportManagement.supportClasses.NullTransition;
 import transportManagement.supportClasses.SystemTester;
@@ -20,13 +19,12 @@ class AirFactory implements TransportFactory {
 	static Transition createTransition( Transition.DataClass data ) {
 		Transition flight = new Flight(data.orig, data.departDate, data.ID, data.dest.get(0));
 		
-		String BaseErrorStr = "Flight " + data.ID + " was unable to be created: "; 
-		MyDate curDate = new MyDate(3, 17, 2019); int maxMonth = 12, maxDays = 31;
-		boolean[] conditions = new boolean[] { data.orig.equals(data.dest.get(0)), data.departDate.compareTo(curDate) < 0,
-				maxMonth < data.departDate.getMonth() || maxDays < data.departDate.getDay(), data.line.isDuplicate(flight) };
+		String BaseErrorStr = "Flight " + data.ID + " was unable to be created: ";
+		boolean[] conditions = new boolean[] { data.orig.equals(data.dest.get(0)), data.departDate.compareToPresent() < 0,
+				data.departDate.isValid(), data.line.isDuplicate(flight) };
 		
 		if( SystemTester.systemTest(BaseErrorStr, conditions, "same airport at origin and destination.",  "cannot create flight in the past.",
-														   "invalid days and/or months.", "duplicate error.") )
+														   "invalid date.", "duplicate error.") )
 			return flight;
 		
 		return new NullTransition();
