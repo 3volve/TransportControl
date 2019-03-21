@@ -21,7 +21,7 @@ class AirFactory implements TransportFactory {
 		
 		String BaseErrorStr = "Flight " + data.ID + " was unable to be created: ";
 		boolean[] conditions = new boolean[] { data.orig.equals(data.dest.get(0)), data.departDate.compareToPresent() < 0,
-				data.departDate.isValid(), data.line.isDuplicate(flight) };
+				!data.departDate.isValid(), data.line.isDuplicate(flight) };
 		
 		if( SystemTester.systemTest(BaseErrorStr, conditions, "same airport at origin and destination.",  "cannot create flight in the past.",
 														   "invalid date.", "duplicate error.") )
@@ -34,11 +34,11 @@ class AirFactory implements TransportFactory {
 		String BaseErrorStr = "FlightSection " + data.seatClass + " class, of flight " + data.transID + " for airline " + data.line.name + " was unable to be created: ";
 		int maxRows = 100;
 		
-		boolean[] conditions = new boolean[] { data.number <= 0 || maxRows < data.number, !data.layout.equals("small") || !data.layout.equals("medium") || !data.layout.equals("wide"),
+		boolean[] conditions = new boolean[] { data.number <= 0 || maxRows < data.number, !data.layout.equals("S") && !data.layout.equals("M") && !data.layout.equals("W"),
 											  data.line.getTransits().get(data.transID).getSections().containsKey(data.seatClass) };
 		
 		if( SystemTester.systemTest(BaseErrorStr, conditions, "incorrect # of rows.", "incorrect given section layout.", "duplicate SeatClass."))
-			return new AirSection(data.seatClass, data.number, data.layout);
+			return new AirSection(data.seatClass, data.number, data.layout, data.pricing);
 			
 		return new NullSection();
 	}

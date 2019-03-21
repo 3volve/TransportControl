@@ -6,19 +6,16 @@ import java.util.TimeZone;
 public class MyDate implements Comparable<MyDate> {
 
 	private final int minute, hour, day, month, year;
-	public final MyDate CUR_DATE;
+	private static MyDate CUR_DATE;
 	
 	public MyDate( int mi, int hr, int mo, int d, int y ) {
 		minute = mi; hour = hr; month = mo; day = d; year = y;
-		Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
 		
-		CUR_DATE = new MyDate(
-			calendar.get(Calendar.MINUTE),
-			calendar.get(Calendar.HOUR_OF_DAY),
-			calendar.get(Calendar.DAY_OF_MONTH),
-			calendar.get(Calendar.MONTH) + 1,
-			calendar.get(Calendar.YEAR)
-		);
+		setCurrentDate();
+	}
+	
+	public MyDate( int mo, int d, int y ) {
+		minute = 59; hour = 24; month = mo; day = d; year = y;
 	}
 
 	public int getMinute() { return minute; }
@@ -62,10 +59,23 @@ public class MyDate implements Comparable<MyDate> {
 		return true;
 	}
 	
+	public void setCurrentDate() {
+		if( CUR_DATE != null ) return;
+		
+		Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+		CUR_DATE = new MyDate(
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.MONTH) + 1,
+				calendar.get(Calendar.YEAR)
+			);
+	}
+	
 	public int compareToPresent() { return this.compareTo(CUR_DATE); }
 	
+	public String toFileString() { return year + ", " + month + ", " + day + ", " + hour + ", " + minute; }
+	
 	@Override
-	public String toString() { return day + "/" + month + "/" + year; }
+	public String toString() { return hour + ":" + minute + ", " + month + "/" + day + "/" + year; }
 	
 	@Override
 	public int compareTo( MyDate that ) {

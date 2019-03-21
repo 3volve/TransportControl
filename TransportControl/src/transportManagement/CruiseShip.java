@@ -45,6 +45,5 @@ public class CruiseShip {
 	
 	HashMap<TransportClass, TransportSection> getLayout() { return cabins; }
 	
-	@Override
-	public String toString() { return name; }
+	public String toViewingString() { return name; }
 }

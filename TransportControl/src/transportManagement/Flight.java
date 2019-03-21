@@ -10,7 +10,7 @@ class Flight extends Transition
 	private String dest;
 	
 	Flight( String orig, MyDate depart, String id, String de )
-	{ super(orig, id, depart, new HashMap<TransportClass, TransportSection>()); }
+	{ super(orig, id, depart, new HashMap<TransportClass, TransportSection>()); dest = de; }
 	
 	protected void addSection( TransportSection section ) { super.getSections().put(section.getTransportClass(), section); }
 
@@ -20,9 +20,23 @@ class Flight extends Transition
 		return false;
 	}
 	
-	@Override
 	public String toString() {
-		return "Flight " + ID + " traveling from " + origin + " to " + dest + " on " + departDate.toString() +
-			   " with Flight Sections:\n\t\t\t" + super.getSections().values().toString();
+		return ID + "|" + departDate.toFileString() + "|" + origin + "|" + dest + super.getSections().values().toString();
+	}
+	
+	@Override
+	public String toViewingString() {
+		String str = "\n	" + ID + ", departing: " + departDate.toString() + ", traveling from " + origin + " to " + dest;
+		
+		if( !super.getSections().isEmpty() ) {
+			 str += ", with sections:";
+			for(int index = 0; index < super.getSections().size(); index++ ) {
+				if( index != 0 ) str += ", ";
+				
+				str += ((TransportSection) (super.getSections().values().toArray()[index])).toViewingString();
+			}
+			 super.getSections().values().toString();
+		}
+		return str;
 	}
 }

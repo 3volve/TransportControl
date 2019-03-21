@@ -13,8 +13,25 @@ class Airline extends TransportLine
 	}
 	
 	@Override
+	public String toViewingString() {
+		String str = name;
+		
+		if( !super.getTransits().isEmpty() ) {
+			str += " with flights: ";
+			
+			for(int index = 0; index < super.getTransits().size(); index++ ) {
+				if( index != 0 ) str += ", ";
+				
+				str += ((Transition) (super.getTransits().values().toArray()[index])).toViewingString();
+			}
+		}
+		
+		return str;
+	}
+	
+	@Override
 	public String toString() {
-		if( !super.getTransits().isEmpty() ) return name + " with flights: " + super.getTransits().values();
+		if( !super.getTransits().isEmpty() ) return name + super.getTransits().values();
 		
 		return name;
 	}

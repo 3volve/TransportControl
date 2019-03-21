@@ -1,35 +1,41 @@
+import java.util.Scanner;
+
 import transportManagement.SystemManager;
+import transportManagement.supportClasses.SystemMenu;
 import transportManagement.supportClasses.SystemBuilder;
-import transportManagement.supportClasses.MyDate;
 
 public class Client
 {
 	public static void main(String[] args) {
 		SystemManager systems = new SystemManager();
 		
-		SystemBuilder systemsBuilder = new SystemBuilder("C:\\Users\\evolv\\git\\TransportControl\\TransportControl\\src\\Transport_Saved_Data.txt");
+		Scanner keyboard = new Scanner(System.in);
+		
+		SystemBuilder systemsBuilder = new SystemBuilder(""
+				+ "C:\\Users\\evolv\\git\\TransportControl\\TransportControl\\src\\Transport_Saved_Data.txt", keyboard);
+		System.out.println("Default Air Transport System has now been loaded...");
 		systems = systemsBuilder.getSystemManager();
 		
-		systems.displaySystemDetails("Air");
+		String type = "";
+		boolean admin = false;
 		
-		/*
-		systems.createPort("Air", "JON");
-		systems.createPort("Air", "DEN");
-		systems.createPort("Cruise", "JON");
-		systems.createPort("Cruise", "DEN");
-		systems.createPort("Cruise", "BOB");
-		systems.createPort("Cruise", "EVO");
-		systems.createPort("Train", "JON");
+		do {
+			type = SystemMenu.strPrompt("transport type to modify here[Air or Cruise]", keyboard);
+			
+			if( !type.equals("Air") && !type.equals("Cruise") )
+				System.out.println("That was not a valid transport type, ");
+		} while( !type.equals("Air") && !type.equals("Cruise") );
 		
-		systems.createTransportLine("Air", "JONNY");
-		systems.createTransportLine("Air", "JONNY");
-		systems.createTransportLine("Cruise", "Cradl");
-		systems.createTransportLine("Cruise", "Cradl");
-		systems.createTransportLine("Cruise", "Alimo");
+		int choice = 0;
+		do {
+			choice = SystemMenu.menuSwitch(type, admin, keyboard);
+			
+			SystemMenu.optionNumber(choice, type, systems, systemsBuilder, keyboard);
+			
+			if( choice == SystemMenu.UI_SWITCH ) admin = !admin;
+			
+		} while(choice != SystemMenu.EXIT_NUM);
 		
-		systems.createTransit("Air", "JONNY", "JON", new MyDate(3, 20, 2020), null, "Jon-ded", "DEN");
-		systems.createTransit("Cruise", "Cradil", "JON", new MyDate(3, 20, 2019), new MyDate(3, 29, 2019), "PartyBoat", "DEN", "BOB", "EVO");
-		systems.createTransit("Cruise", "Cradil", "JON", new MyDate(4, 20, 2019), new MyDate(5, 20, 2019), "PartyBoat", "DEN", "BOB", "EVO");
-		*/
+		keyboard.close();
 	}
 }

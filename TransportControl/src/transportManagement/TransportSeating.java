@@ -3,8 +3,8 @@ package transportManagement;
 public abstract class TransportSeating {
 
 	private boolean booked;
-	final int number;
-	final char letter;
+	final private int number;
+	final private char letter;
 	
 	TransportSeating( int n, char l ) {
 		booked = false;
@@ -14,5 +14,9 @@ public abstract class TransportSeating {
 	
 	void bookSeat() { booked = true; }
 	
-	boolean isAvailable() { return booked; }
+	boolean isAvailable() { return !booked; }
+	
+	char getLetter() { return letter; }
+
+	public int getRow() { return number; }
 }

@@ -11,8 +11,6 @@ public interface TransportFactory {
 		{
 			case( "Air" ) : return AirFactory.createTransportLine(name);
 			
-			case( "Train" ) : return TrainFactory.createTransportLine(name);
-			
 			case( "Cruise" ) : return CruiseFactory.createTransportLine(name, fleet);
 		}
 		
@@ -25,8 +23,6 @@ public interface TransportFactory {
 		{
 			case( "Air" ) : return AirFactory.createTransition(data);
 			
-			case( "Train" ) : return TrainFactory.createTransition(data);
-			
 			case( "Cruise" ) : return CruiseFactory.createTransition(data);
 		}
 		
@@ -38,8 +34,6 @@ public interface TransportFactory {
 		switch( type )
 		{
 			case( "Air" ) : return AirFactory.createSection(data);
-			
-			case( "Train" ) : return TrainFactory.createSection(data);
 			
 			case( "Cruise" ) : return CruiseFactory.createSection(data);
 		}

@@ -63,7 +63,7 @@ class CruiseFactory implements TransportFactory {
 	static TransportSection createSection( TransportSection.DataClass data ) {
 		Cruiseline cruiseline = (Cruiseline)data.line;
 		CruiseShip ship = cruiseline.getShips().get(data.transID);
-		TransportSection cabin = new CruiseSection(data.number, data.layout, data.seatClass);
+		TransportSection cabin = new CruiseSection(data.number, data.layout, data.seatClass, data.pricing);
 		
 		String baseErrorStr = "Cabin " + data.seatClass + " was unable to be created: ";
 		boolean[] conditions = new boolean[] { ship == null, !ship.setCabin(cabin) };

@@ -20,8 +20,18 @@ public abstract class Transition {
 	protected void addSection(TransportSection section) {
 		sections.put(section.getTransportClass(), section);
 	}
+	
+	protected boolean departsOn( MyDate date ) {
+		if( date.getYear() == departDate.getYear() && date.getMonth() == departDate.getMonth() && date.getDay() == departDate.getDay() )
+			return true;
+		return false;
+	}
 
 	HashMap<TransportClass, TransportSection> getSections() { return sections; }
+	
+	public abstract String  toViewingString();
+	
+	public abstract String toString();
 	
 	class DataClass {
 		final String orig, ID;
@@ -34,7 +44,9 @@ public abstract class Transition {
 			departDate = deD; arriveDate = arD;
 			
 			dest = new ArrayList<String>();
-			for( String d : de ) dest.add(d);
+			for( String d : de ) {
+				dest.add(d);
+			}
 		}
 	}
 }

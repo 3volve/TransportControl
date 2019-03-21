@@ -11,7 +11,9 @@ class Seat extends TransportSeating
 	boolean isWindowSeat() { return isWindow; }
 	
 	boolean isAisleSeat() { return isAisle; }
+
+	char getLetter() { return super.getLetter(); }
 	
 	@Override
-	public String toString() { return "Seat " + number + letter; }
+	public String toString() { return "" + super.getRow() + getLetter(); }
 }

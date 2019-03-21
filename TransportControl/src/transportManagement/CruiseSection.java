@@ -8,8 +8,8 @@ public class CruiseSection extends TransportSection {
 
 	private HashMap<Character, Cabin[]> decks;
 	
-	CruiseSection( int cabinsPerDeck, String deck, TransportClass seatClass ) {
-		super(seatClass);
+	CruiseSection( int cabinsPerDeck, String deck, TransportClass seatClass, int price ) {
+		super(seatClass, price);
 		
 		for( int index = 0; index < deck.length(); index++ ) {
 			Cabin[] cabins = new Cabin[cabinsPerDeck];
@@ -28,6 +28,10 @@ public class CruiseSection extends TransportSection {
 	protected boolean isSeatAvailable(int cabin, char deck)
 	{ return decks.get(deck)[cabin].isAvailable(); }
 
+	@Override
+	public String toViewingString()
+	{ return seatingClass.toString(); }
+	
 	@Override
 	public String toString()
 	{ return seatingClass.toString(); }

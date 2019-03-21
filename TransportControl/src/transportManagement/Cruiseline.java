@@ -29,4 +29,35 @@ class Cruiseline extends TransportLine {
 		return false;
 	}
 
+	@Override
+	public String toViewingString() {
+		String str =  "Cruiseline: " + name;
+		
+		if( !super.getTransits().isEmpty() ) {
+			str = str + " with Cruisetrips:";
+			
+			for( Transition transit : super.getTransits().values() )
+				str += " " + transit.toViewingString();
+		}
+			
+		if( !ships.isEmpty() ) {
+			str = str + ", and Ships:" + ships.values();
+
+			for( CruiseShip ship : ships.values() )
+				str += " " + ship.toViewingString();
+		}
+		
+		return str;
+	}
+
+	@Override
+	public String toString() {
+		String str = name;
+		
+		if( !super.getTransits().isEmpty() ) str = str + super.getTransits().values();
+		if( !ships.isEmpty() ) str = str + ", " + ships.values();
+		
+		return str;
+	}
+
 }

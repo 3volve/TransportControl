@@ -26,4 +26,14 @@ public class CruiseTrip extends Transition
 	}
 	
 	MyDate[] getTripDates() { return new MyDate[] {departDate, arriveDate}; }
+
+	@Override
+	public String toViewingString() {
+		return null;
+	}
+
+	@Override
+	public String toString() {
+		return null;
+	}
 }
