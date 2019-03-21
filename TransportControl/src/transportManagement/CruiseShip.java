@@ -11,14 +11,19 @@ public class CruiseShip {
 	private HashMap<TransportClass, TransportSection> cabins;
 	private String name;
 	
-	CruiseShip( String n ) { name = n; }
+	CruiseShip( String n ) {
+		trips = new HashSet<MyDate[]>();
+		cabins = new HashMap<TransportClass, TransportSection>();
+		name = n;
+	}
 	
 	boolean bookShip( MyDate depart, MyDate arrive ) {
-		for( MyDate[] booking : trips )
-			if( (depart.isBetween(booking[0], booking[1]) || arrive.isBetween(booking[0], booking[1])) ||
-				(depart.compareTo(booking[0]) < 0 && arrive.compareTo(booking[1]) > 0) )
-					return false;
-		
+		if( !trips.isEmpty() )
+			for( MyDate[] booking : trips )
+				if( (depart.isBetween(booking[0], booking[1]) || arrive.isBetween(booking[0], booking[1])) ||
+					(depart.compareTo(booking[0]) < 0 && arrive.compareTo(booking[1]) > 0) )
+						return false;
+			
 		MyDate[] newBooking = new MyDate[] {depart, arrive};
 		trips.add(newBooking);
 		return true;

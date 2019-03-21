@@ -11,7 +11,13 @@ public class NullSection extends TransportSection
 	protected boolean isSeatAvailable( int row, char col ) { return false; }
 	
 	@Override
-	public String toViewingString() { return "This is a Null Section"; }
+	public void printLayout() {}
+	
+	@Override
+	public void printDetailedString() {}
+	
+	@Override
+	public  String toViewingString() { return "This is a Null Section"; }
 
 	@Override
 	public String toString() { return "NULL"; }

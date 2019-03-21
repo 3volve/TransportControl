@@ -1,5 +1,7 @@
 package transportManagement;
 
+import java.awt.LayoutManager;
+
 import transportManagement.supportClasses.SeatClass;
 import transportManagement.supportClasses.TransportClass;
 
@@ -99,8 +101,38 @@ class AirSection extends TransportSection
 		return false;
 	}
 	
-	@Override
-	public String toViewingString() {
+	protected void printLayout() {
+		int counter = 0;
+		boolean aisle = false;
+		
+		while( counter < layoutColumns(layout) ) {
+			if( aisle ) {
+				for( int row = 0; row < seats.length; row++ ) { System.out.print("="); }
+				System.out.println();
+			}
+			
+			if( layoutAisleSeat(layout, counter) ) aisle = !aisle;
+			
+			
+			for( int row = 0; row < seats.length; row++ ) {
+				for( int col = 0; col < seats[row].length; col++ ) {
+					if( col == counter ) System.out.print(seats[row][col].bookStr());
+				}
+			}
+			
+			System.out.println();
+			counter++;
+		}
+				
+	}
+	
+	protected void printDetailedString() {
+		System.out.println("\n    " + seatingClass + " class, costing " + pricing + " per seat,"
+				+ " with " + numberSeatsAvailable() + " seats still available\n");
+		printLayout();
+	}
+	
+	protected String toViewingString() {
 		return "\n		" + seatingClass + " class, costing " + pricing + " per seat,"
 				+ " with " + numberSeatsAvailable() + " seats still available";
 	}

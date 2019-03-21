@@ -8,7 +8,8 @@ public class NullTransition extends Transition {
 	
 	protected boolean hasCities(String orig, String... dest) { return false; }
 
-	@Override
+	public void printSimpleString() {}
+	
 	public String toViewingString() { return "This is a Null Transition."; }
 	
 	@Override

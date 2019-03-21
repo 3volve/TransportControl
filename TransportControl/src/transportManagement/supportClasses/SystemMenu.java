@@ -31,12 +31,17 @@ public class SystemMenu {
 			System.out.println("2)   Create cruises, ports, trips, and ships with cabin sections and cabins.");	
 			System.out.println("3)   Print the detailed current state of the airline subsystem.");	
 			System.out.println("4)   Print the detailed current state of the cruise subsystem.");
+			System.out.println("5)   Switch back to customer UI.");
+			System.out.println("6)   Exit.");
 			choice = numberPrompt("menu choice here", keyboard);
 			
 			
-			if( choice < 1 || choice > EXIT_NUM )
+			if( choice < 1 || choice > 6 )
 				System.out.println("That was not a valid choice from the options above, please try again.");
-		} while( choice < 1 || choice > EXIT_NUM );
+		} while( choice < 1 || choice > 6 );
+		
+		if( choice == 5 ) choice = UI_SWITCH;
+		else if( choice == 6 ) choice = EXIT_NUM;
 		
 		return choice;
 	}
@@ -96,7 +101,97 @@ public class SystemMenu {
 		return choice;
 	}
 	
-	public static void optionNumber( int choice, String type, SystemManager systems, SystemBuilder systemsBuilder, Scanner keyboard ) {
+	private static int creatingMenu(String type, Scanner keyboard) {
+		int choice = 0;
+		
+		do {
+			System.out.println("\n____Creational Menu____");
+			
+			System.out.println("1)   Create " + type + "ports.");
+			System.out.println("2)   Create " + type + "lines (and ships).");	
+			System.out.println("3)   Create " + type + "Transits(flights, or trips).");	
+			System.out.println("4)   Create " + type + "Sections(Seat sections, or cabin sections with seats.");
+			System.out.println("5)   Exit.");
+			choice = numberPrompt("menu choice here", keyboard);
+			
+			
+			if( choice < 1 || choice > 5 )
+				System.out.println("That was not a valid choice from the options above, please try again.");
+		} while( choice < 1 || choice > 5 );
+		
+		return choice;
+	}
+	
+	public static void optionDecider( int choice, String type, SystemManager systems, SystemBuilder systemsBuilder, boolean admin, Scanner keyboard) {
+		if( admin ) optionNumberAdmin(choice, systems, keyboard);
+		else optionNumberCustomer(choice, type, systems, systemsBuilder, keyboard);
+	}
+	
+	private static void optionNumberAdmin( int choice, SystemManager systems, Scanner keyboard ) {
+		
+		switch( choice )
+		{
+			case(1) :	createLoop("Air", systems, keyboard);
+						break;
+			case(2) :	createLoop("Cruise", systems, keyboard);
+						break;
+			case(3) :	systems.displayDetailedSystemDetails("Air");
+						break;
+			case(4) :	systems.displayDetailedSystemDetails("Cruise");
+						break;
+		}
+	}
+	
+	private static void createLoop( String type, SystemManager systems, Scanner keyboard ) {
+		int choice = -1;
+		
+		do {
+			choice = creatingMenu(type,  keyboard);
+			
+			SystemMenu.createOptions(choice, type, systems, keyboard);
+		} while(choice != 5);
+	}
+	
+	private static void createOptions( int choice, String type, SystemManager systems, Scanner keyboard ) {
+		switch( choice )
+		{
+			case(1) :	systems.createPort(type, strPrompt(type + "port name", keyboard));
+						break;
+			case(2) :	String lineName = strPrompt(type + "line", keyboard);
+						int numShips = 0;
+						String[] ships = null;
+						if( type.equals("Cruise") ) {
+							numShips = numberPrompt("number for how many ships you want to add", keyboard);
+							ships = new String[numShips];
+							
+							for( int index = 0; index < numShips; index++ ) 
+								ships[index] = strPrompt("ship name", keyboard);
+						}
+						systems.createTransportLine(type, lineName, ships);
+						break;
+			case(3) :	systems.createTransit(type, strPrompt(type + "line name", keyboard),
+							strPrompt("starting " + type + "port name", keyboard),
+							new MyDate(numberPrompt("departure month", keyboard), numberPrompt("day", keyboard), numberPrompt("year", keyboard)),
+							new MyDate(numberPrompt("arrival month", keyboard), numberPrompt("day", keyboard), numberPrompt("year", keyboard)),
+							strPrompt("Fight or trip ID", keyboard),
+							strPrompt("ending " + type + "port name", keyboard));
+						break;
+			case(4) :	String seatType = ""; String layout = "";
+						if( type.equals("Air") ) { seatType = "seat"; layout = "flight layout[S, M, W](for small medium or wide)"; }
+						else if( type.equals("Cruise") ) { seatType = "cabin"; layout = "String of lettered floors all in a row"; }
+						
+						systems.createSection(type,
+							strPrompt(type + "line name", keyboard),
+							strPrompt("Flight or Trip ID", keyboard),
+							numberPrompt("number of " + seatType + " rows", keyboard),
+							strPrompt(layout, keyboard),
+							seatClassPrompt(type, keyboard),
+							numberPrompt("pricing", keyboard));
+						break;
+		}
+	}
+	
+	private static void optionNumberCustomer( int choice, String type, SystemManager systems, SystemBuilder systemsBuilder, Scanner keyboard ) {
 		
 		switch( choice )
 		{
@@ -206,10 +301,5 @@ public class SystemMenu {
 			if( seat == null) System.out.print("That was not a valid SeatClass, ");
 		} while( seat == null );
 		return seat;
-	}
-
-	public static String UISwitch(String UI) {
-		if( UI.equals("customer") ) return "admin";
-		else return "customer";
 	}
 }

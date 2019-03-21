@@ -6,7 +6,10 @@ class Cruiseline extends TransportLine {
 	
 	private HashMap<String, CruiseShip> ships;
 
-	Cruiseline(String n) { super(n); }
+	Cruiseline(String n) { 
+		super(n);
+		ships = new HashMap<String, CruiseShip>();
+	}
 
 	boolean addShip( String name, TransportSection... sections ) {
 		if( !ships.containsKey(name) ) {
@@ -30,7 +33,7 @@ class Cruiseline extends TransportLine {
 	}
 
 	@Override
-	public String toViewingString() {
+	String toViewingString() {
 		String str =  "Cruiseline: " + name;
 		
 		if( !super.getTransits().isEmpty() ) {

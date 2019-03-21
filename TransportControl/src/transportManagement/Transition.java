@@ -29,7 +29,9 @@ public abstract class Transition {
 
 	HashMap<TransportClass, TransportSection> getSections() { return sections; }
 	
-	public abstract String  toViewingString();
+	protected abstract void printSimpleString();
+	
+	protected abstract String  toViewingString();
 	
 	public abstract String toString();
 	

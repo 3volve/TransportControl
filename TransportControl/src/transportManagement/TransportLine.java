@@ -23,11 +23,7 @@ abstract class TransportLine {
 		return false;
 	}
 	
-	String getName() { return name; }
-	
 	abstract String toViewingString();
 	
 	public abstract String toString();
-	
-	
 }

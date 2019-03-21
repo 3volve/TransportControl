@@ -207,9 +207,31 @@ public class SystemManager
 		for( int index = 0; index < lines.get(type).size(); index++ ) {
 			if( index != 0 ) str += ", ";
 			
-			str += ((TransportLine) lines.get(type).values().toArray()[index]).getName();
+			str += ((TransportLine) lines.get(type).values().toArray()[index]).name;
 		}
 		
 		return str + "]";
+	}
+
+	public void displayDetailedSystemDetails( String type ) {
+		if( cities.get(type) != null  && !cities.get(type).isEmpty() )
+			System.out.println("---" + type + "ports---\n" + cities.get(type).values().toString());
+		else System.out.println("No " + type + "ports have been initialized yet.");
+		
+		if( lines.get(type) != null  && !lines.get(type).isEmpty() ) {
+			System.out.println("\n---" + type + "lines---");
+		
+			for( TransportLine line : lines.get(type).values() ) {
+				System.out.println(line.name + " with trips:");
+				
+				for( Transition transit : line.getTransits().values() ) {
+					transit.printSimpleString();
+					
+					for( TransportSection section : transit.getSections().values() )
+						section.printDetailedString();
+				}
+			}
+		}
+		else System.out.println("No " + type + "lines have been initialized yet.");
 	}
 }

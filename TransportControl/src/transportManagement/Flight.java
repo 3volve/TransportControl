@@ -20,12 +20,12 @@ class Flight extends Transition
 		return false;
 	}
 	
-	public String toString() {
-		return ID + "|" + departDate.toFileString() + "|" + origin + "|" + dest + super.getSections().values().toString();
+	protected void printSimpleString() {
+		String str = "\n  " + ID + ", departing: " + departDate.toString() + ", traveling from " + origin + " to " + dest + ", with sections:";
+		System.out.println(str);
 	}
 	
-	@Override
-	public String toViewingString() {
+	protected String toViewingString() {
 		String str = "\n	" + ID + ", departing: " + departDate.toString() + ", traveling from " + origin + " to " + dest;
 		
 		if( !super.getSections().isEmpty() ) {
@@ -38,5 +38,10 @@ class Flight extends Transition
 			 super.getSections().values().toString();
 		}
 		return str;
+	}
+	
+	@Override
+	public String toString() {
+		return ID + "|" + departDate.toFileString() + "|" + origin + "|" + dest + super.getSections().values().toString();
 	}
 }

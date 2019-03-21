@@ -19,7 +19,11 @@ public abstract class TransportSection
 	
 	TransportClass getTransportClass() { return seatingClass; }
 	
-	public abstract String toViewingString();
+	protected abstract void printLayout();
+
+	protected abstract void printDetailedString();
+	
+	protected abstract String toViewingString();
 	
 	public abstract String toString();
 	

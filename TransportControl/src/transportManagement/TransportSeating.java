@@ -18,5 +18,10 @@ public abstract class TransportSeating {
 	
 	char getLetter() { return letter; }
 
-	public int getRow() { return number; }
+	int getRow() { return number; }
+	
+	String bookStr() { 
+		if( booked ) return "X";
+		else return "O";
+	}
 }

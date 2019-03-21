@@ -12,8 +12,9 @@ class Airline extends TransportLine
 		return false;
 	}
 	
-	@Override
-	public String toViewingString() {
+	
+	
+	 String toViewingString() {
 		String str = name;
 		
 		if( !super.getTransits().isEmpty() ) {

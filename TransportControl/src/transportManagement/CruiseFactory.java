@@ -13,8 +13,9 @@ class CruiseFactory implements TransportFactory {
 		else {
 			Cruiseline newCruise = new Cruiseline(name);
 			
-			for( int index = 0; index < ships.length; index++ )
-				newCruise.addShip(ships[index]);
+			if( ships != null )
+				for( int index = 0; index < ships.length; index++ )
+					newCruise.addShip(ships[index]);
 			
 			return newCruise;
 		}
@@ -41,7 +42,7 @@ class CruiseFactory implements TransportFactory {
 		boolean[] conditions = new boolean[] {
 				data.departDate.dayDifference(data.arriveDate) > 21,	
 				data.departDate.compareToPresent() < 0 && data.departDate.compareTo(data.arriveDate) > 0,
-				data.departDate.isValid() || data.arriveDate.isValid(),	
+				!data.departDate.isValid() || !data.arriveDate.isValid(),	
 				data.line.isDuplicate(trip),				
 				!hasBookedShip	
 				};
