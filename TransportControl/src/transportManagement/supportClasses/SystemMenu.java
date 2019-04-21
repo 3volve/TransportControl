@@ -23,7 +23,39 @@ public class SystemMenu {
 		return -1;
 	}
 	
-	private static int adminMenu(Scanner keyboard) {
+	public static boolean initializeAdmin( Scanner keyboard ) {
+		int choice = 0;
+		
+		do {
+			System.out.println("1)   Start system in administrator mode.");
+			System.out.println("2)   Start system in customer mode.");
+			choice = numberPrompt("menu choice here", keyboard);
+			
+			if( choice < 1 || choice > 2 )
+				System.out.println("That was not a valid choice from the options above, please try again.");
+		} while( choice < 1 || choice > 2 );
+		
+		return choice == 1;
+	}
+	
+	public static String initializeType( Scanner keyboard ) {
+		String type = "";
+		
+		do {
+			type = SystemMenu.strPrompt("transport type to modify here[Air or Cruise]", keyboard);
+			
+			if( !type.equals("Air") && !type.equals("Cruise") )
+				System.out.println("That was not a valid transport type, ");
+		} while( !type.equals("Air") && !type.equals("Cruise") );
+		
+		return type;
+	}
+	
+	
+/*  -------
+ *   Menus 
+ *  -------*/
+	private static int adminMenu( Scanner keyboard ) {
 		int choice = 0;
 		
 		do {
@@ -33,7 +65,7 @@ public class SystemMenu {
 			System.out.println("2)   Create cruises, ports, trips, and ships with cabin sections and cabins.");	
 			System.out.println("3)   Print the detailed current state of the airline subsystem.");	
 			System.out.println("4)   Print the detailed current state of the cruise subsystem.");
-			System.out.println("5)   Switch back to customer UI.");
+			System.out.println("5)   Switch to customer UI.");
 			System.out.println("6)   Exit.");
 			choice = numberPrompt("menu choice here", keyboard);
 			
@@ -90,10 +122,10 @@ public class SystemMenu {
 			choice = numberPrompt("a menu choice here", keyboard);
 			
 			
-			if( choice < 1 || choice > 6 )
+			if( choice < 1 || choice > 7 )
 				System.out.println("That was not a valid choice from the options above, please try again.");
 			
-		} while( choice < 1 || choice > 6 );
+		} while( choice < 1 || choice > 7 );
 		
 		if( choice == 5 ) choice = 7;  //to account for the different menus.
 		else if( choice == 6 ) choice = UI_SWITCH;
@@ -110,9 +142,9 @@ public class SystemMenu {
 			System.out.println("\n____Creational Menu____");
 			
 			System.out.println("1)   Create " + type + "ports.");
-			System.out.println("2)   Create " + type + "lines (and ships).");	
+			System.out.println("2)   Create " + type + "lines.");	
 			System.out.println("3)   Create " + type + "Transits(flights, or trips).");	
-			System.out.println("4)   Create " + type + "Sections(Seat sections, or cabin sections with seats.");
+			System.out.println("4)   Create " + type + "Sections(Seat sections, or cabin sections with seats).");
 			System.out.println("5)   Exit.");
 			choice = numberPrompt("menu choice here", keyboard);
 			
@@ -123,7 +155,12 @@ public class SystemMenu {
 		
 		return choice;
 	}
+//End of Menus
+
 	
+/*  ---------
+ *   Options 
+ *  ---------*/
 	public static void optionDecider( int choice, String type, SystemManager systems, SystemBuilder systemsBuilder, boolean admin, Scanner keyboard) {
 		if( admin ) optionNumberAdmin(choice, systems, keyboard);
 		else optionNumberCustomer(choice, type, systems, systemsBuilder, keyboard);
@@ -175,7 +212,7 @@ public class SystemMenu {
 							strPrompt("starting " + type + "port name", keyboard),
 							new MyDate(numberPrompt("departure month", keyboard), numberPrompt("day", keyboard), numberPrompt("year", keyboard)),
 							new MyDate(numberPrompt("arrival month", keyboard), numberPrompt("day", keyboard), numberPrompt("year", keyboard)),
-							strPrompt("Fight or trip ID", keyboard),
+							strPrompt("Flight or trip ID", keyboard),
 							strPrompt("ending " + type + "port name", keyboard));
 						break;
 			case(4) :	String seatType = ""; String layout = "";
@@ -234,7 +271,12 @@ public class SystemMenu {
 			case(8) :	systems.printAirsystemDetailsToFile(strPrompt("File name", keyboard), keyboard);
 		}
 	}
+//End of Options
 	
+
+/*  ---------
+ *   Prompts 
+ *  ---------*/
 	private static char characterPrompt( String type, Scanner keyboard ) {
 		char input = strPrompt(type, keyboard).charAt(0);
 		return input;
@@ -304,4 +346,5 @@ public class SystemMenu {
 		} while( seat == null );
 		return seat;
 	}
+//End of Prompts
 }

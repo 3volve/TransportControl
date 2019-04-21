@@ -36,18 +36,18 @@ class Cruiseline extends TransportLine {
 	String toViewingString() {
 		String str =  "Cruiseline: " + name;
 		
+		if( !ships.isEmpty() ) {
+			str = str + " with Ships:";
+
+			for( CruiseShip ship : ships.values() )
+				str += " " + ship.toViewingString();
+		}
+		
 		if( !super.getTransits().isEmpty() ) {
 			str = str + " with Cruisetrips:";
 			
 			for( Transition transit : super.getTransits().values() )
 				str += " " + transit.toViewingString();
-		}
-			
-		if( !ships.isEmpty() ) {
-			str = str + ", and Ships:" + ships.values();
-
-			for( CruiseShip ship : ships.values() )
-				str += " " + ship.toViewingString();
 		}
 		
 		return str;

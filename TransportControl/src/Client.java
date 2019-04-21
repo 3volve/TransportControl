@@ -15,23 +15,23 @@ public class Client
 		System.out.println("Default Air Transport System has now been loaded...");
 		systems = systemsBuilder.getSystemManager();
 		
+		boolean admin = SystemMenu.initializeAdmin(keyboard);
 		String type = "";
-		boolean admin = false;
 		
-		do {
-			type = SystemMenu.strPrompt("transport type to modify here[Air or Cruise]", keyboard);
-			
-			if( !type.equals("Air") && !type.equals("Cruise") )
-				System.out.println("That was not a valid transport type, ");
-		} while( !type.equals("Air") && !type.equals("Cruise") );
+		if( !admin ) type = SystemMenu.initializeType(keyboard);
 		
 		int choice = 0;
 		do {
+			
 			choice = SystemMenu.menuSwitch(type, admin, keyboard);
 			
 			SystemMenu.optionDecider(choice, type, systems, systemsBuilder, admin, keyboard);
 			
-			if( choice == SystemMenu.UI_SWITCH ) admin = !admin;
+			if( choice == SystemMenu.UI_SWITCH ) {
+				if( admin ) type = SystemMenu.initializeType(keyboard);
+				
+				admin = !admin;
+			}
 			
 		} while(choice != SystemMenu.EXIT_NUM);
 		
