@@ -1,4 +1,6 @@
-package transportManagement.supportClasses;
+package transportManagement;
+
+import transportManagement.supportClasses.TransportClass;
 
 public enum SeatClass implements TransportClass
 { first, business, economy; 

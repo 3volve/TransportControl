@@ -3,6 +3,7 @@ package transportManagement.supportClasses;
 import java.io.*;
 import java.util.Scanner;
 
+import transportManagement.SeatClass;
 import transportManagement.SystemManager;
 
 public class SystemBuilder {

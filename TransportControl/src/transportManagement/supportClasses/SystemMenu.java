@@ -3,6 +3,8 @@ package transportManagement.supportClasses;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import transportManagement.CabinClass;
+import transportManagement.SeatClass;
 import transportManagement.SystemManager;
 
 public class SystemMenu {
@@ -259,7 +261,7 @@ public class SystemMenu {
 		return input;
 	}
 	
-	private static TransportClass seatClassPrompt(String type, Scanner keyboard ) {
+	private static TransportClass seatClassPrompt( String type, Scanner keyboard ) {
 		if( type.equals("Air") ) return seatPrompt(keyboard);
 		else if( type.equals("Cruise") ) return cabinPrompt(keyboard);
 		
