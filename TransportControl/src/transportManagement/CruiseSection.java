@@ -63,8 +63,4 @@ public class CruiseSection extends TransportSection {
 		return "\n		" + seatingClass + " class, costing " + pricing + " per cabin,"
 			+ " with " + numberCabinsAvailable() + " cabins still available";
 	}
-	
-	@Override
-	public String toString()
-	{ return seatingClass.toString(); }
 }

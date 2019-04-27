@@ -25,8 +25,6 @@ public abstract class TransportSection
 	
 	protected abstract String toViewingString();
 	
-	public abstract String toString();
-	
 	class DataClass
 	{
 		final String transID, layout;

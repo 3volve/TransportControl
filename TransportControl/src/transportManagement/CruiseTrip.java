@@ -9,6 +9,7 @@ public class CruiseTrip extends Transition
 	private MyDate arriveDate;
 	private ArrayList<String> dest;
 	
+	//don't really have implementation for adding multiple destinations
 	CruiseTrip( String orig, String id, MyDate depart, MyDate arrive, CruiseShip ship, ArrayList<String> de ) {
 		super(orig, id, depart, ship.getLayout());
 		arriveDate = arrive;
@@ -46,13 +47,13 @@ public class CruiseTrip extends Transition
 		}
 		return str;
 	}
-
+/*
 	public String toString() {
-		String str = "\n	" + ID + ", departing: " + departDate.toString() + ", traveling from " + origin + " to " + dest.toString() + " and arriveing: " + arriveDate.toString();
+		String str = "\n	" + ID + ", departing: " + departDate.toString() + ", traveling from " + origin + " to " + dest.toString() + " and arriving: " + arriveDate.toString();
 		
 		if( !super.getSections().isEmpty() )
 			 str += ", with sections:" + super.getSections().values().toString();
 			 
 		return str;
-	}
+	}*/
 }

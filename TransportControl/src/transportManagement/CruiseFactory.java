@@ -27,14 +27,13 @@ class CruiseFactory implements TransportFactory {
 	//checks if the departure date is earlier than the present or is after the arrive date, checks if the months and 
 	static Transition createTransition( Transition.DataClass data ) {
 		Cruiseline cruiseline = (Cruiseline)data.line;
-		Transition trip = new NullTransition(); boolean hasBookedShip = false;
+		Transition trip = new NullTransition();
+		CruiseShip shipToBook = null;
 		
 		for( CruiseShip ship : cruiseline.getShips().values() ) {
-			if( hasBookedShip ) break;
-			
-			if( ship.bookShip(data.departDate, data.arriveDate) ) {
-				trip = new CruiseTrip(data.orig, data.ID, data.departDate, data.arriveDate, ship, data.dest);
-				hasBookedShip = true;
+			if( ship.isAvailable(data.departDate, data.arriveDate) ) {
+				shipToBook = ship;
+				break;
 			}
 		}
 		
@@ -44,7 +43,7 @@ class CruiseFactory implements TransportFactory {
 				data.departDate.compareToPresent() < 0 && data.departDate.compareTo(data.arriveDate) > 0,
 				!data.departDate.isValid() || !data.arriveDate.isValid(),	
 				data.line.isDuplicate(trip),				
-				!hasBookedShip	
+				shipToBook == null	
 				};
 		
 		if( SystemTester.systemTest (
@@ -54,8 +53,10 @@ class CruiseFactory implements TransportFactory {
 				"invalid days and/or months",			
 				"duplicate error.",		
 				"no available ship from cruiseline " + data.line.name + " between set dates.")
-				)
+				) {
+			shipToBook.bookShip(data.departDate, data.arriveDate);
 			return trip;
+		}
 		
 		return new NullTransition();
 	}
@@ -74,7 +75,7 @@ class CruiseFactory implements TransportFactory {
 				"no ship by the name of " + data.transID + ".",
 				"seatingClass " + cabin.getTransportClass() + " has already been created for given ship."
 				);
-		
+			
 		return new NullSection();
 	}
 

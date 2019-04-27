@@ -1,7 +1,10 @@
 import java.util.Scanner;
 
+//Added things for testing purposes, remove MyDate and CabinClass after finished testing.
+import transportManagement.CabinClass;
 import transportManagement.SystemManager;
 import transportManagement.supportClasses.SystemMenu;
+import transportManagement.supportClasses.MyDate;
 import transportManagement.supportClasses.SystemBuilder;
 
 public class Client
@@ -17,6 +20,22 @@ public class Client
 		
 		boolean admin = SystemMenu.initializeAdmin(keyboard);
 		String type = "";
+		
+	/*----- For output Testing, Don't forget to remove ----*/
+		
+		systems.createPort("Cruise", "BAD");
+		systems.createPort("Cruise", "GAD");
+		systems.createPort("Cruise", "JAD");
+		systems.createTransportLine("Cruise", "EVIL", "Magistrate", "Mrs. Jennings", "Alexander the Great");
+		systems.createTransportLine("Cruise", "GOOD", "Priest", "Robin Hood");
+		systems.createTransit("Cruise", "EVIL", "BAD", new MyDate(10, 10, 2020), new MyDate(10, 20, 2020), "EV001", "JAD");
+		systems.createTransit("Cruise", "EVIL", "JAD", new MyDate(10, 10, 2020), new MyDate(10, 21, 2020), "EV002", "BAD");
+		systems.createTransit("Cruise", "GOOD", "JAD", new MyDate(10, 10, 2020), new MyDate(10, 21, 2020), "GD001", "GAD");
+		systems.createSection("Cruise", "EVIL", "Magistrate", 20, "ABC", CabinClass.family, 750);
+		systems.createSection("Cruise", "EVIL", "Magistrate", 30, "A", CabinClass.deluxeFamily, 1750);
+		systems.createSection("Cruise", "GOOD", "Priest", 30, "ABC", CabinClass.family, 50);
+
+	/*----- For Testing, Don't forget to remove ----*/
 		
 		if( !admin ) type = SystemMenu.initializeType(keyboard);
 		

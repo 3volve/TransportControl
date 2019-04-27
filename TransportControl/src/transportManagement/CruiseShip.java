@@ -17,15 +17,24 @@ public class CruiseShip {
 		name = n;
 	}
 	
-	boolean bookShip( MyDate depart, MyDate arrive ) {
+	void bookShip( MyDate depart, MyDate arrive ) {
+		if( !trips.isEmpty() )
+			for( MyDate[] booking : trips )
+				if( (depart.isBetween(booking[0], booking[1]) || arrive.isBetween(booking[0], booking[1])) ||
+					(depart.compareTo(booking[0]) < 0 && arrive.compareTo(booking[1]) > 0) )
+						return;
+			
+		MyDate[] newBooking = new MyDate[] {depart, arrive};
+		trips.add(newBooking);
+	}
+	
+	boolean isAvailable(MyDate depart, MyDate arrive ) {
 		if( !trips.isEmpty() )
 			for( MyDate[] booking : trips )
 				if( (depart.isBetween(booking[0], booking[1]) || arrive.isBetween(booking[0], booking[1])) ||
 					(depart.compareTo(booking[0]) < 0 && arrive.compareTo(booking[1]) > 0) )
 						return false;
-			
-		MyDate[] newBooking = new MyDate[] {depart, arrive};
-		trips.add(newBooking);
+		
 		return true;
 	}
 	
@@ -50,5 +59,5 @@ public class CruiseShip {
 	
 	HashMap<TransportClass, TransportSection> getLayout() { return cabins; }
 	
-	public String toViewingString() { return name; }
+	public String getName() { return name; }
 }

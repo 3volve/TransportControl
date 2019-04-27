@@ -33,8 +33,6 @@ public abstract class Transition {
 	
 	protected abstract String  toViewingString();
 	
-	public abstract String toString();
-	
 	class DataClass {
 		final String orig, ID;
 		final TransportLine line;

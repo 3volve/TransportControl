@@ -221,7 +221,7 @@ public class SystemMenu {
 						
 						systems.createSection(type,
 							strPrompt(type + "line name", keyboard),
-							strPrompt("Flight or Trip ID", keyboard),
+							strPrompt("Flight or Ship ID", keyboard),
 							numberPrompt("number of " + seatType + " rows", keyboard),
 							strPrompt(layout, keyboard),
 							seatClassPrompt(type, keyboard),

@@ -24,6 +24,4 @@ abstract class TransportLine {
 	}
 	
 	abstract String toViewingString();
-	
-	public abstract String toString();
 }
