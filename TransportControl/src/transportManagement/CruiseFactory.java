@@ -55,6 +55,7 @@ class CruiseFactory implements TransportFactory {
 				"no available ship from cruiseline " + data.line.name + " between set dates.")
 				) {
 			shipToBook.bookShip(data.departDate, data.arriveDate);
+			cruiseline.addBooking(trip, shipToBook);
 			return trip;
 		}
 		

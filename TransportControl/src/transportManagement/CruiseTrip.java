@@ -47,13 +47,4 @@ public class CruiseTrip extends Transition
 		}
 		return str;
 	}
-/*
-	public String toString() {
-		String str = "\n	" + ID + ", departing: " + departDate.toString() + ", traveling from " + origin + " to " + dest.toString() + " and arriving: " + arriveDate.toString();
-		
-		if( !super.getSections().isEmpty() )
-			 str += ", with sections:" + super.getSections().values().toString();
-			 
-		return str;
-	}*/
 }

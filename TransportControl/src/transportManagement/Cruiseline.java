@@ -6,9 +6,8 @@ import java.util.HashSet;
 class Cruiseline extends TransportLine {
 	
 	private HashMap<String, CruiseShip> ships;
-	private HashMap<CruiseShip, HashSet<CruiseTrip>> bookings;
-	//I need to set up some way to connect a ship to all of it's trips.
-	//alternatively I could also have each trip have it's ship as a field
+	private HashMap<CruiseShip, HashSet<Transition>> bookings;
+
 	Cruiseline(String n) { 
 		super(n);
 		ships = new HashMap<String, CruiseShip>();
@@ -18,6 +17,7 @@ class Cruiseline extends TransportLine {
 		if( !ships.containsKey(name) ) {
 			ships.put(name, new CruiseShip(name));
 			ships.get(name).setCabins(sections);
+			bookings.put(ships.get(name), new HashSet<Transition>());
 			return true;
 		}
 		
@@ -25,6 +25,16 @@ class Cruiseline extends TransportLine {
 	}
 	
 	HashMap<String, CruiseShip> getShips() { return ships; }
+	
+	boolean addBooking( Transition transit, CruiseShip ship ) {
+		if( !super.getTransits().containsKey(transit.ID) )
+			if( bookings.containsKey(ship) ) {
+				bookings.get(ship).add(transit);
+				return true;
+			}
+			
+		return false;
+	}
 
 	@Override
 	boolean hasTransit(String orig, String... dest) {
@@ -40,15 +50,15 @@ class Cruiseline extends TransportLine {
 		String str =  "Cruiseline: " + name;
 		
 		if( !ships.isEmpty() ) {
-			str += ", with Ships:\n	  ";
+			str += ", with Ships:\n";
 
 			for( CruiseShip ship : ships.values() ) {
 				str += " " + ship.getName();
-			
-				if( super.getTransits().containsKey(ship.getName()) ) {
-					str += ", currently booked for the trips:";
-				
-					for( Transition transit : super.getTransits().values() )
+
+				if( !bookings.get(ship).isEmpty() ) {
+					str += ", currently booked for the trips:\n ";
+					
+					for( Transition transit : bookings.get(ship) )
 						str += " " + transit.toViewingString();
 				}
 				else {

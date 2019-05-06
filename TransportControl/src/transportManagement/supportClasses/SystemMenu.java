@@ -208,12 +208,26 @@ public class SystemMenu {
 						}
 						systems.createTransportLine(type, lineName, ships);
 						break;
-			case(3) :	systems.createTransit(type, strPrompt(type + "line name", keyboard),
-							strPrompt("starting " + type + "port name", keyboard),
-							new MyDate(numberPrompt("departure month", keyboard), numberPrompt("day", keyboard), numberPrompt("year", keyboard)),
-							new MyDate(numberPrompt("arrival month", keyboard), numberPrompt("day", keyboard), numberPrompt("year", keyboard)),
-							strPrompt("Flight or trip ID", keyboard),
-							strPrompt("ending " + type + "port name", keyboard));
+			case(3) :	String line = strPrompt(type + "line name", keyboard);
+						String orig = strPrompt("starting " + type + "port name", keyboard);
+						MyDate depart = new MyDate(numberPrompt("departure month", keyboard), numberPrompt("day", keyboard), numberPrompt("year", keyboard));
+						MyDate arrive = new MyDate(numberPrompt("arrival month", keyboard), numberPrompt("day", keyboard), numberPrompt("year", keyboard));
+						String transitID = strPrompt("Flight or trip ID", keyboard);
+
+						if( type.equals("Air") )
+							systems.createTransit(type, line, orig, depart, arrive, transitID,
+									strPrompt("ending " + type + "port name", keyboard));
+						
+						else {
+							int numDest = numberPrompt("n amount of total destinations", keyboard);
+							String[] dest = new String[numDest];
+							
+							for( int index = 0; index < numDest; index++ ) {
+								dest[index] = strPrompt("ending " + type + "port name", keyboard);
+							}
+							systems.createTransit(type, line, orig, depart, arrive, transitID, dest);
+						}
+						
 						break;
 			case(4) :	String seatType = ""; String layout = "";
 						if( type.equals("Air") ) { seatType = "seat"; layout = "flight layout[S, M, W](for small medium or wide)"; }
@@ -222,10 +236,10 @@ public class SystemMenu {
 						systems.createSection(type,
 							strPrompt(type + "line name", keyboard),
 							strPrompt("Flight or Ship ID", keyboard),
-							numberPrompt("number of " + seatType + " rows", keyboard),
+							numberPrompt(" number of " + seatType + " rows", keyboard),
 							strPrompt(layout, keyboard),
 							seatClassPrompt(type, keyboard),
-							numberPrompt("pricing", keyboard));
+							numberPrompt(" pricing", keyboard));
 						break;
 		}
 	}
@@ -239,17 +253,17 @@ public class SystemMenu {
 						break;
 						
 			case(2) : 	systems.changePricing(type, strPrompt(type + "line" + systems.allLinesToString(type), keyboard), 
-							strPrompt("transit ID#", keyboard), seatClassPrompt(type, keyboard), numberPrompt("price", keyboard));
+							strPrompt("transit ID#", keyboard), seatClassPrompt(type, keyboard), numberPrompt(" price", keyboard));
 						break;
 			
 			case(3) :	systems.findAvailableTransits(type, strPrompt("starting port" + systems.allPortsToString(type), keyboard),
 							strPrompt("ending port" + systems.allPortsToString(type), keyboard),
-							new MyDate(numberPrompt("month", keyboard), numberPrompt("day", keyboard), numberPrompt("year", keyboard)));
+							new MyDate(numberPrompt(" month", keyboard), numberPrompt(" day", keyboard), numberPrompt(" year", keyboard)));
 						break;
 			
 			case(4) :	systems.changePricing(type, strPrompt(type + "line" + systems.allLinesToString(type), keyboard),
 							strPrompt("starting port" + systems.allPortsToString(type), keyboard),
-							strPrompt("ending port" + systems.allPortsToString(type), keyboard), seatClassPrompt(type, keyboard), numberPrompt("price", keyboard));
+							strPrompt("ending port" + systems.allPortsToString(type), keyboard), seatClassPrompt(type, keyboard), numberPrompt(" price", keyboard));
 						break;
 			
 			case(5) :	String seatType = "";
@@ -257,7 +271,7 @@ public class SystemMenu {
 						else if( type.equals("Cruise") ) seatType = "cabin";
 						
 						systems.bookSeat(type, strPrompt(type + "line" + systems.allLinesToString(type), keyboard),
-							strPrompt("transit ID#", keyboard), seatClassPrompt(type, keyboard), numberPrompt(seatType + "number", keyboard),
+							strPrompt("transit ID#", keyboard), seatClassPrompt(type, keyboard), numberPrompt(seatType + " number", keyboard),
 							Character.toUpperCase(characterPrompt(seatType + " letter", keyboard)));
 						break;
 			
@@ -297,7 +311,7 @@ public class SystemMenu {
 	public static String strPrompt( String type, Scanner keyboard ) {
 		String input = "";
 		
-		System.out.print("Please enter a " + type + ": ");
+		System.out.print("Please enter a" + type + ": ");
 		input = keyboard.nextLine();
 		
 		return input;
