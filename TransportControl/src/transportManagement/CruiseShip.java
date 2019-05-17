@@ -7,34 +7,41 @@ import transportManagement.supportClasses.MyDate;
 import transportManagement.supportClasses.TransportClass;
 
 public class CruiseShip {
-	private HashSet<MyDate[]> trips;
+	private HashSet<CruiseTrip> trips;
 	private HashMap<TransportClass, TransportSection> cabins;
 	private String name;
 	
 	CruiseShip( String n ) {
-		trips = new HashSet<MyDate[]>();
+		trips = new HashSet<CruiseTrip>();
 		cabins = new HashMap<TransportClass, TransportSection>();
 		name = n;
 	}
 	
-	void bookShip( MyDate depart, MyDate arrive ) {
-		if( !trips.isEmpty() )
-			for( MyDate[] booking : trips )
-				if( (depart.isBetween(booking[0], booking[1]) || arrive.isBetween(booking[0], booking[1])) ||
-					(depart.compareTo(booking[0]) < 0 && arrive.compareTo(booking[1]) > 0) )
+	void bookShip( CruiseTrip newBooking ) {
+		MyDate depart = newBooking.departDate, arrive = newBooking.getArriveDate();
+		
+		if( !trips.isEmpty() ) {
+			for( CruiseTrip booking : trips ) {
+				MyDate bookingDep = booking.departDate, bookingArr = booking.getArriveDate();
+				
+				if( (depart.isBetween(bookingDep, bookingArr) || arrive.isBetween(bookingDep, bookingArr)) ||
+					(depart.compareTo(bookingDep) < 0 && arrive.compareTo(bookingArr) > 0) )
 						return;
-			
-		MyDate[] newBooking = new MyDate[] {depart, arrive};
+			}
+		}
+		
 		trips.add(newBooking);
 	}
 	
-	boolean isAvailable(MyDate depart, MyDate arrive ) {
+	boolean isAvailable( MyDate depart, MyDate arrive ) {
 		if( !trips.isEmpty() )
-			for( MyDate[] booking : trips )
-				if( (depart.isBetween(booking[0], booking[1]) || arrive.isBetween(booking[0], booking[1])) ||
-					(depart.compareTo(booking[0]) < 0 && arrive.compareTo(booking[1]) > 0) )
-						return false;
-		
+			for( CruiseTrip booking : trips ) {
+				MyDate bookingDep = booking.departDate, bookingArr = booking.getArriveDate();
+			
+			if( (depart.isBetween(bookingDep, bookingArr) || arrive.isBetween(bookingDep, bookingArr)) ||
+				(depart.compareTo(bookingDep) < 0 && arrive.compareTo(bookingArr) > 0) )
+					return false;
+			}
 		return true;
 	}
 	
@@ -57,7 +64,18 @@ public class CruiseShip {
 		return true;
 	}
 	
-	HashMap<TransportClass, TransportSection> getLayout() { return cabins; }
+	boolean hasTrips() { return !trips.isEmpty(); }
+	
+	HashSet<CruiseTrip> getTrips() { return trips; }
+	
+	HashMap<TransportClass, TransportSection> getLayout() { 
+		HashMap<TransportClass, TransportSection> cloned = new HashMap<TransportClass, TransportSection>();
+		
+		for( TransportClass cabin : cabins.keySet() )
+			cloned.put(cabin, ((CruiseSection)cabins.get(cabin)).clone());
+		
+		return cloned;
+	}
 	
 	public String getName() { return name; }
 }

@@ -1,7 +1,5 @@
 package transportManagement;
 
-import java.awt.LayoutManager;
-
 import transportManagement.supportClasses.TransportClass;
 
 class AirSection extends TransportSection

@@ -2,7 +2,7 @@ package transportManagement;
 
 import transportManagement.supportClasses.TransportClass;
 
-public abstract class TransportSection
+public abstract class TransportSection implements Cloneable
 {
 	final TransportClass seatingClass;
 	int pricing;

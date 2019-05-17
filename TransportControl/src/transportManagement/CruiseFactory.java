@@ -54,8 +54,8 @@ class CruiseFactory implements TransportFactory {
 				"duplicate error.",		
 				"no available ship from cruiseline " + data.line.name + " between set dates.")
 				) {
-			shipToBook.bookShip(data.departDate, data.arriveDate);
-			cruiseline.addBooking(trip, shipToBook);
+			trip = new CruiseTrip(data.orig, data.ID, data.departDate, data.arriveDate, shipToBook, data.dest);
+			shipToBook.bookShip((CruiseTrip)trip);
 			return trip;
 		}
 		
@@ -71,11 +71,11 @@ class CruiseFactory implements TransportFactory {
 		String baseErrorStr = "Cabin " + data.seatClass + " was unable to be created: ";
 		boolean[] conditions = new boolean[] { ship == null, !ship.setCabin(cabin) };
 		
-		SystemTester.systemTest (
+		if( SystemTester.systemTest (
 				baseErrorStr, conditions,
 				"no ship by the name of " + data.transID + ".",
 				"seatingClass " + cabin.getTransportClass() + " has already been created for given ship."
-				);
+				) );
 			
 		return new NullSection();
 	}

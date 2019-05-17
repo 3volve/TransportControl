@@ -9,7 +9,6 @@ public class CruiseTrip extends Transition
 	private MyDate arriveDate;
 	private ArrayList<String> dest;
 	
-	//don't really have implementation for adding multiple destinations
 	CruiseTrip( String orig, String id, MyDate depart, MyDate arrive, CruiseShip ship, ArrayList<String> de ) {
 		super(orig, id, depart, ship.getLayout());
 		arriveDate = arrive;
@@ -33,18 +32,35 @@ public class CruiseTrip extends Transition
 		System.out.println(str);
 	}
 	
+	MyDate getArriveDate() { return arriveDate; }
+	
 	protected String toViewingString() {
-		String str = "\n	" + ID + ", departing: " + departDate.toString() + ", traveling from " + origin + " to " + dest.toString() + " and arriving: " + arriveDate.toString();
+		String temp = "";
+		if( dest.size() == 1 ) temp = dest.get(0).toString();
+		else { 
+			for( int index = 0; index < dest.size(); index++ ) {
+				temp += dest.get(index).toString();
+				if( index < dest.size() - 2 )
+					temp += ", ";
+				else if( index == dest.size() - 2 )
+					temp += " and ";
+			}
+		}
+		
+		String str = "\n	" + ID + ", departing at: " + departDate.toString() + ", traveling from " + origin + " to " + temp + "; arriving at: " + arriveDate.toString();
 		
 		if( !super.getSections().isEmpty() ) {
 			 str += ", with sections:";
+			 
 			for(int index = 0; index < super.getSections().size(); index++ ) {
 				if( index != 0 ) str += ", ";
 				
-				str += ((TransportSection) (super.getSections().values().toArray()[index])).toViewingString();
+				str += ( (TransportSection)(super.getSections().values().toArray()[index]) ).toViewingString();
 			}
-			 super.getSections().values().toString();
 		}
-		return str;
+		else
+			str += ", without any sections";
+		
+		return str + ".\n";
 	}
 }

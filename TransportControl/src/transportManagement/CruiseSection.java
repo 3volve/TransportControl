@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import transportManagement.supportClasses.TransportClass;
 
-public class CruiseSection extends TransportSection {
+public class CruiseSection extends TransportSection implements Cloneable {
 
 	private HashMap<Character, TransportSeating[]> decks;
 	
@@ -40,7 +40,22 @@ public class CruiseSection extends TransportSection {
 					
 		 return count;
 	}
+	
+	@Override
+	protected CruiseSection clone() {
+		CruiseSection clone = this.clone();
+		
+		for( Character charact : decks.keySet() ) {
+			TransportSeating[] temp = new TransportSeating[decks.get(charact).length];
 
+			for( int index = 0; index < decks.get(charact).length; index++ )
+				temp[index] = ((Cabin)decks.get(charact)[index]).clone();
+				
+			clone.decks.put(charact, temp);
+		}
+		
+		return clone;
+	}
 
 	protected void printLayout() {
 		for( Character deck : decks.keySet() ) {

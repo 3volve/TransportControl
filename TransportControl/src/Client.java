@@ -14,22 +14,23 @@ public class Client
 		
 		Scanner keyboard = new Scanner(System.in);
 		
-		SystemBuilder systemsBuilder = new SystemBuilder(SystemMenu.strPrompt("default system file location", keyboard), keyboard);
-		System.out.println("Default Air Transport System has now been loaded...");
+		SystemBuilder systemsBuilder = new SystemBuilder("C:\\Users\\evolv\\git\\TransportControl\\TransportControl\\src\\Transport_Saved_Data.txt", keyboard); //SystemMenu.strPrompt(" default system file location", keyboard)
+		System.out.println("\nDefault Air Transport System has now been loaded...");
 		systems = systemsBuilder.getSystemManager();
 		
 		boolean admin = SystemMenu.initializeAdmin(keyboard);
 		String type = "";
 		
 	/*----- For output Testing, Don't forget to remove ----*/
+		System.out.println("\nTesting Cruise example set-up has now been loaded...");
 		
 		systems.createPort("Cruise", "BAD");
 		systems.createPort("Cruise", "GAD");
 		systems.createPort("Cruise", "JAD");
 		systems.createTransportLine("Cruise", "EVIL", "Magistrate", "Mrs. Jennings", "Alexander the Great");
 		systems.createTransportLine("Cruise", "GOOD", "Priest", "Robin Hood");
-		systems.createTransit("Cruise", "EVIL", "BAD", new MyDate(10, 10, 2020), new MyDate(10, 20, 2020), "EV001", "JAD");
-		systems.createTransit("Cruise", "EVIL", "JAD", new MyDate(10, 10, 2020), new MyDate(10, 21, 2020), "EV002", "BAD");
+		systems.createTransit("Cruise", "EVIL", "BAD", new MyDate(10, 10, 2020), new MyDate(10, 20, 2020), "EV001", "JAD", "GAD");
+		systems.createTransit("Cruise", "EVIL", "JAD", new MyDate(10, 10, 2020), new MyDate(10, 21, 2020), "EV002", "BAD", "GAD");
 		systems.createTransit("Cruise", "GOOD", "JAD", new MyDate(10, 10, 2020), new MyDate(10, 21, 2020), "GD001", "GAD");
 		systems.createSection("Cruise", "EVIL", "Magistrate", 20, "ABC", CabinClass.family, 750);
 		systems.createSection("Cruise", "EVIL", "Magistrate", 30, "A", CabinClass.deluxeFamily, 1750);
