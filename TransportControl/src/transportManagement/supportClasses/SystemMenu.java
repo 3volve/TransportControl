@@ -27,6 +27,7 @@ public class SystemMenu {
 		int choice = 0;
 		
 		do {
+			System.out.println("\n____Admin/Customer Switch Menu____");
 			System.out.println("1)   Start system in administrator mode.");
 			System.out.println("2)   Start system in customer mode.");
 			choice = numberPrompt(" menu choice here", keyboard);
@@ -45,6 +46,7 @@ public class SystemMenu {
 		int choice = 0;
 		
 		do {
+			System.out.println("\n____Airplane/Cruiseship Switch Menu____");
 			System.out.println("1)   Start customer system for Airplanes.");
 			System.out.println("2)   Start customer system for Cruiseships.");
 			choice = numberPrompt(" menu choice here", keyboard);
@@ -75,7 +77,7 @@ public class SystemMenu {
 			System.out.println("4)   Print the detailed current state of the cruise subsystem.");
 			System.out.println("5)   Switch to customer UI.");
 			System.out.println("6)   Exit.");
-			choice = numberPrompt("menu choice here", keyboard);
+			choice = numberPrompt(" menu choice here", keyboard);
 			
 			
 			if( choice < 1 || choice > 6 )

@@ -124,13 +124,13 @@ class AirSection extends TransportSection
 	}
 	
 	protected void printDetailedString() {
-		System.out.println("\n    " + seatingClass + " class, costing " + pricing + " per seat,"
+		System.out.println("\n   " + seatingClass + " class, costing " + pricing + " per seat,"
 				+ " with " + numberSeatsAvailable() + " seats still available\n");
 		printLayout();
 	}
 	
 	protected String toViewingString() {
-		return "\n		" + seatingClass + " class, costing " + pricing + " per seat,"
+		return "\n      " + seatingClass + " class, costing " + pricing + " per seat,"
 				+ " with " + numberSeatsAvailable() + " seats still available";
 	}
 	

@@ -28,7 +28,7 @@ public class CruiseTrip extends Transition
 	MyDate[] getTripDates() { return new MyDate[] {departDate, arriveDate}; }
 
 	protected void printSimpleString() {
-		String str = "\n  " + ID + ", departing: " + departDate.toString() + ", traveling from " + origin + " to " + dest.toString() + " and arriving: " + arriveDate.toString() + ", with sections:";
+		String str = "\n  " + ID + ", departing " + departDate.toString() + ", traveling from " + origin + " to " + dest.toString() + " and arriving " + arriveDate.toString() + ", with sections:";
 		System.out.println(str);
 	}
 	
@@ -47,7 +47,7 @@ public class CruiseTrip extends Transition
 			}
 		}
 		
-		String str = "\n	" + ID + ", departing at: " + departDate.toString() + ", traveling from " + origin + " to " + temp + "; arriving at: " + arriveDate.toString();
+		String str = "\n      " + ID + ", departing " + departDate.toString() + ", traveling from " + origin + " to " + temp + "; arriving " + arriveDate.toString();
 		
 		if( !super.getSections().isEmpty() ) {
 			 str += ", with sections:";

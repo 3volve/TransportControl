@@ -21,23 +21,22 @@ class Flight extends Transition
 	}
 	
 	protected void printSimpleString() {
-		String str = "\n  " + ID + ", departing: " + departDate.toString() + ", traveling from " + origin + " to " + dest + ", with sections:";
+		String str = "\n   " + ID + ", departing " + departDate.toString() + ", traveling from " + origin + " to " + dest + ", with sections:";
 		System.out.println(str);
 	}
 	
 	protected String toViewingString() {
-		String str = "\n	" + ID + ", departing: " + departDate.toString() + ", traveling from " + origin + " to " + dest;
+		String str = "\n   " + ID + ", departing " + departDate.toString() + ", traveling from " + origin + " to " + dest;
 		
 		if( !super.getSections().isEmpty() ) {
 			 str += ", with sections:";
 			for(int index = 0; index < super.getSections().size(); index++ ) {
 				if( index != 0 ) str += ", ";
 				
-				str += ((TransportSection) (super.getSections().values().toArray()[index])).toViewingString();
+				str += "   " + ((AirSection) (super.getSections().values().toArray()[index])).toViewingString();
 			}
-			 super.getSections().values().toString();
 		}
-		return str;
+		return str + ".\n";
 	}
 	
 	@Override

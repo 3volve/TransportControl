@@ -15,7 +15,7 @@ public class Client
 		Scanner keyboard = new Scanner(System.in);
 		
 		SystemBuilder systemsBuilder = new SystemBuilder("C:\\Users\\evolv\\git\\TransportControl\\TransportControl\\src\\Transport_Saved_Data.txt", keyboard); //SystemMenu.strPrompt(" default system file location", keyboard)
-		System.out.println("\nDefault Air Transport System has now been loaded...");
+		System.out.println("Default Air Transport System has now been loaded...");
 		systems = systemsBuilder.getSystemManager();
 		
 		boolean admin = SystemMenu.initializeAdmin(keyboard);

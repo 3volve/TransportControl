@@ -73,14 +73,14 @@ public class CruiseSection extends TransportSection implements Cloneable {
 	}
 	
 	protected void printDetailedString() {
-		String str = "\n	  " + seatingClass + " class, costing " + pricing + " per cabin,"
+		String str = "\n      " + seatingClass + " class, costing " + pricing + " per cabin,"
 				+ " with " + numberCabinsAvailable() + " cabins still available";
 		System.out.println(str);
 		printLayout();
 	}
 	
 	protected String toViewingString() {
-		return "\n		" + seatingClass + " class, costing " + pricing + " per cabin,"
+		return "\n         " + seatingClass + " class, costing " + pricing + " per cabin,"
 			+ " with " + numberCabinsAvailable() + " cabins still available";
 	}
 }

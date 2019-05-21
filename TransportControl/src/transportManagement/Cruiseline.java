@@ -1,7 +1,6 @@
 package transportManagement;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 class Cruiseline extends TransportLine {
 	
@@ -35,13 +34,13 @@ class Cruiseline extends TransportLine {
 
 	@Override
 	String toViewingString() {
-		String str =  "- " + name;
+		String str =  "" + name;
 		
 		if( !ships.isEmpty() ) {
 			str += ", with Ships:";
 
 			for( CruiseShip ship : ships.values() ) {
-				str += "\n    " + ship.getName();
+				str += "\n   " + ship.getName();
 
 				if( ship.hasTrips() ) {
 					str += ", currently booked for the trips:";
