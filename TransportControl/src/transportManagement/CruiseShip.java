@@ -61,6 +61,11 @@ public class CruiseShip {
 			return false;
 		
 		cabins.put(section.getTransportClass(), section);
+		
+		if( !trips.isEmpty() )
+			for( CruiseTrip trip : trips )
+				trip.addSection(section);
+		
 		return true;
 	}
 	

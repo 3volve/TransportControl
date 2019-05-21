@@ -43,15 +43,20 @@ public class CruiseSection extends TransportSection implements Cloneable {
 	
 	@Override
 	protected CruiseSection clone() {
-		CruiseSection clone = this.clone();
+		CruiseSection clone = null;
 		
-		for( Character charact : decks.keySet() ) {
-			TransportSeating[] temp = new TransportSeating[decks.get(charact).length];
-
-			for( int index = 0; index < decks.get(charact).length; index++ )
-				temp[index] = ((Cabin)decks.get(charact)[index]).clone();
-				
-			clone.decks.put(charact, temp);
+		try { clone = (CruiseSection)super.clone(); }
+		catch (CloneNotSupportedException e) { e.printStackTrace(); }
+		
+		if( clone != null ){
+			for( Character charact : decks.keySet() ) {
+				TransportSeating[] temp = new TransportSeating[decks.get(charact).length];
+	
+				for( int index = 0; index < decks.get(charact).length; index++ )
+					temp[index] = ((Cabin)decks.get(charact)[index]).clone();
+					
+				clone.decks.put(charact, temp);
+			}
 		}
 		
 		return clone;
